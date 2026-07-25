@@ -1,0 +1,141 @@
+# Painting plan-sweep checklist
+
+## Painting plan-sweep checklist
+
+### General
+- [ ] Confirm paint scope vs. finish schedule (AF010) and Finish Plan (A2.01) ΓÇö no orphan rooms without a finish code
+- [ ] Verify all room tags on A1.01 Floor Plan map to a finish type on A2.01 / AF010
+- [ ] Cross-check elevations (A4.01) for painted surfaces not coded on the finish plan (bulkheads, soffits, feature walls)
+- [ ] Note which surfaces are owner/vendor graphics vs. field paint (Planet Fitness brand accents)
+- [ ] Confirm substrate types (GWB, CMU, metal, concrete, wood) before assigning systems
+- [ ] Check for paint exclusion notes (prefinished, FRP, tile, stainless, aluminum storefront)
+- [ ] Confirm primer requirements by substrate and existing vs. new construction
+- [ ] Verify VOC / LEED or local Fredericksburg/VA coatings requirements if specified
+- [ ] Identify touch-up vs. full field paint for TI vs. shell conditions
+- [ ] Confirm whether ceilings, deck, structure, and MEP are painted or left unpainted
+
+### Interior
+- [ ] Fitness floor perimeter walls ΓÇö field color + brand accent walls (purple / yellow / black zones typical for PF)
+- [ ] Cardio / strength / 30-minute circuit zone accent walls and column wraps
+- [ ] Front desk / Black Card / sales office walls and accent panels
+- [ ] Locker rooms (menΓÇÖs / womenΓÇÖs / family) ΓÇö moisture-resistant or epoxy system above tile/FRP
+- [ ] Toilet rooms / wet walls ΓÇö paint above wainscot vs. full-height paint
+- [ ] Tanning / HydroMassage / Total Body Enhancement rooms (typical PF amenities)
+- [ ] Group fitness / stretch / free-weight rooms
+- [ ] Offices, break room, storage, laundry
+- [ ] Electrical, data, mechanical, janitor rooms (often missed on finish plans)
+- [ ] Corridors, vestibule, exit passages
+- [ ] Interior columns, pilasters, and pipe wraps in open fitness volume
+- [ ] Exposed structure / open ceiling (deck, joists, duct, conduit) if schedule calls for paint
+- [ ] Softfits, bulkheads, ceiling clouds, and gypsum ceilings
+- [ ] Stair stringers, risers, landings, and stair walls (if multi-level or mezzanine)
+- [ ] Handrails / guardrails field paint vs. prefinished
+- [ ] Access panels, FDC cabinets, fire extinguisher cabinets (to match adjacent wall)
+- [ ] Hollow metal / GWB chase walls at equipment and restrooms
+
+### Exterior
+- [ ] Exterior wall paint / EIFS / stucco / CMU field and accent colors (A4.01 elevations)
+- [ ] Canopy underside, fascia, and metal panel returns
+- [ ] Storefront framing ΓÇö field paint vs. anodized/prefinished (usually excluded; confirm)
+- [ ] Exterior hollow metal doors and frames
+- [ ] Bollards, pipe guards, and utility screens
+- [ ] Exposed steel, lintels, and miscellaneous metals
+- [ ] Roof screen / RTU screening if painted
+- [ ] Exterior stair / ramp steel (if any)
+- [ ] Signage backing panels or painted wall areas behind monument/building signs
+- [ ] Dumpster enclosure CMU/steel (often paint-miss)
+
+### Doors & frames
+- [ ] All HM door frames ΓÇö prime + finish (typical full paint scope)
+- [ ] HM doors ΓÇö paint both faces and edges
+- [ ] Wood doors ΓÇö factory finish vs. field paint/stain (confirm AF010)
+- [ ] Vision lite kits / sidelites ΓÇö paint vs. prefinished
+- [ ] Door frames at restrooms, mechanical, electrical, storage (easy misses)
+- [ ] Exterior HM doors ΓÇö exterior enamel system
+- [ ] Overhead / coiling door frames and surrounds if present
+- [ ] Frame-to-wall caulk coordination (painter vs. sealant scope)
+
+### Specialty
+- [ ] Epoxy / high-performance coatings in wet areas, janitor, laundry
+- [ ] Anti-graffiti or cleanable coatings at high-traffic PF public walls (if specified)
+- [ ] Floor striping / court or functional zone lines (if in paint scope vs. flooring)
+- [ ] Painted graphics, logos, or brand murals ΓÇö field paint underlay vs. vinyl wrap
+- [ ] Mirror wall backers / GWB behind full-height mirrors (paint before install)
+- [ ] Equipment wall protection vs. paint interface
+- [ ] Intumescent fireproofing topcoat (if structural steel requires it)
+- [ ] Mechanical/electrical equipment bases or housekeeping pads (if painted)
+- [ ] Pipe identification / color coding (if required by spec)
+
+### Wallcovering
+- [ ] Confirm wallcovering vs. paint on AF010 / A2.01 (PF often limited WC)
+- [ ] Vinyl / fabric WC at offices or feature walls ΓÇö primer/sealer by painter
+- [ ] Wallcovering adhesive and primer responsibility
+- [ ] Painted borders / reveals around wallcovering panels
+- [ ] Removal/prep of existing WC if remodel (not stated ΓÇö confirm)
+
+### Site
+- [ ] Site light poles / bases ΓÇö paint vs. galvanized (if in set)
+- [ ] Site railing, fences, gates
+- [ ] Exterior concrete stain/sealer (if in paint division)
+- [ ] Parking / curb paint (usually civil/striping ΓÇö confirm exclusion)
+- [ ] Bike racks, benches, site furnishings field paint
+
+## Likely finish systems
+
+| Area | Likely system (infer from PF / commercial fitness) |
+|------|-----------------------------------------------------|
+| Open fitness GWB walls | Latex eggshell/satin, 1 primer + 2 finish; brand accent colors |
+| Offices / corridors | Latex eggshell, standard commercial |
+| Locker / toilet (above tile/FRP) | Moisture-resistant acrylic or eggshell epoxy-alternative |
+| Janitor / laundry / wet support | Semi-gloss acrylic or waterborne epoxy |
+| HM doors & frames | Alkyd or waterborne DTM semi-gloss over shop primer |
+| Exterior CMU/EIFS/stucco | Elastomeric or 100% acrylic exterior; masonry primer on CMU |
+| Exterior metals / bollards | DTM acrylic or alkyd enamel |
+| Exposed structure (if painted) | Dryfall or acrylic on deck/joists; coordinate overspray |
+| Feature / brand accent walls | Same latex system, scheduled accent color(s) from finish schedule |
+| Mech / elec rooms | Flat or eggshell utility paint |
+
+## Missing sheets / RFI questions
+
+1. **Full specification book / Division 09** ΓÇö Is painting specified (e.g., 09 91 00)? Only finish schedule AF010 is listed; need product manufacturers, sheens, and MPI/OTC systems.
+2. **Room finish schedule completeness** ΓÇö Does AF010 list every room on A1.01, including mech, elec, data, janitor, and storage?
+3. **Reflected ceiling plan** ΓÇö No RCP named in set list; are open ceilings / deck / ductwork painted?
+4. **Interior elevations / enlarged restroom plans** ΓÇö Beyond A4.01, are wet-area paint limits (above tile/FRP) detailed?
+5. **Door schedule** ΓÇö Confirm HM vs. wood, factory vs. field finish for all doors/frames.
+6. **Exterior material notes** ΓÇö Confirm painted surfaces vs. prefinished metal panels / storefront on A4.01.
+7. **Brand standards package** ΓÇö Planet Fitness corporate paint colors, accent wall locations, and approved products?
+8. **Existing conditions** ΓÇö New build vs. TI/remodel? Any abatement, existing paint, or patch-and-paint only zones?
+9. **Wallcovering schedule** ΓÇö Any WC, or paint-only project?
+10. **Specialty coatings** ΓÇö Epoxy floors/walls, intumescent, dryfall, or anti-graffiti required?
+11. **Graphics / murals** ΓÇö Painter provides base coat only, or full graphic paint scope?
+12. **Site / civil sheets** ΓÇö Any site metal or curb paint in architectural paint scope?
+13. **MEP coordination** ΓÇö Paint before or after equipment; access panel and cabinet finish match?
+14. **Sheet index** ΓÇö ΓÇ£Full SetΓÇ¥ listed but only A1.01, A2.01, A4.01, AF010 named; request complete sheet index for specs, details, and door/finish schedules.
+
+## Suggested takeoff conditions (Name | linear or area or count)
+
+| Name | Unit type |
+|------|-----------|
+| Interior GWB walls ΓÇö field color | area |
+| Interior GWB walls ΓÇö accent / brand color | area |
+| Interior GWB ceilings / soffits / bulkheads | area |
+| Open ceiling / structure dryfall (if required) | area |
+| Locker / toilet walls above tile or FRP | area |
+| Wet-area high-performance / epoxy walls | area |
+| Mech / elec / janitor utility walls | area |
+| Interior HM door frames | count (or linear) |
+| Interior HM doors | count |
+| Exterior HM doors & frames | count |
+| Wood doors field finish (if any) | count |
+| Interior columns / pipe wraps | area or count |
+| Handrails / guardrails field paint | linear |
+| Exterior wall paint (EIFS/stucco/CMU) | area |
+| Exterior canopy underside / fascia | area |
+| Exterior metals / bollards / misc. steel | count or area |
+| Access panels / FEC cabinets to match wall | count |
+| Touch-up / patch & paint allowance zones | area |
+| Primer only (new GWB / CMU block filler) | area |
+| Wallcovering primer/sealer (if WC present) | area |
+| Feature wall base coat under graphics | area |
+| Stair walls / stringers (if applicable) | area / linear |
+| Dumpster enclosure / site walls (if in scope) | area |

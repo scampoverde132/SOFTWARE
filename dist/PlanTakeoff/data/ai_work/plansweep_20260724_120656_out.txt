@@ -1,0 +1,132 @@
+# Painting plan-sweep checklist
+
+## Evidence-based plan-sweep
+
+| Evidence | Why it matters | Action |
+|---|---|---|
+| Drawing / sheet list is empty (0 sheets) | No A/I/finish sheets means scope, extents, and exclusions cannot be verified against contract documents | Hold production takeoff until A-series, interior elevations, reflected ceiling plans, door schedule, and finish schedule are issued; log as missing docs RFI |
+| Plan text extract is empty | Room names, finish keys, notes, and exclusions are not available to validate quantities | Request PDF text layer or re-export; do not invent finish tags |
+| Estimator notes are empty | No clarified exclusions, phasing, or owner standards for 1600 K Street | Confirm scope basis (base bid vs alt), occupied vs vacant, and touch-up vs full repaint |
+| PT-1 Walls carried as 70.54 LF | Walls are normally SF; LF suggests base, chair rail, wainscot band, or a linear wall run was coded as walls | Reclassify: if true wall field paint, convert from plan dimensions to SF; if linear item, move to Base/Trim or specialty striping |
+| Ceilings 96.31 SF only | Small ceiling area vs zero doors/base implies partial suite, corridor stub, or incomplete capture | Confirm if this is a limited remodel zone; sweep all rooms on issued plans for flat vs open ceiling |
+| Doors: 0 EA | Commercial K Street-type space almost always has leaf/frame paint or clear-coat unless NIC | Pull door schedule; count painted doors/frames/sidelites; mark hollow metal vs wood |
+| Base / Trim: 0 LF | Either no painted base, base is NIC, or trim was missed | Verify base material (rubber/vinyl NIC vs wood painted); check casework, window stools, and wall protection |
+| Tag PT-1 present without schedule | Finish system, primer, coats, and sheen are undefined | Obtain finish schedule / paint legend mapping PT-1 to manufacturer system |
+
+Project inference (name only): **1600 K Street** reads as multi-tenant commercial / office. Treat as interior commercial repaint or TI until drawings prove otherwise. Do not invent exterior, amenity, or hospitality finish lists.
+
+---
+
+## Painting plan-sweep checklist
+
+### General
+- [ ] Confirm contract set date, addenda, and sketch revisions before locking quantities
+- [ ] Map every PT-# / P-# / finish key on plans to a written paint system (no orphan tags)
+- [ ] Separate new construction vs existing-to-remain vs patch-and-paint
+- [ ] Flag NIC / by others / existing finish to remain notes on every sheet type
+- [ ] Confirm occupied building constraints (odor, after-hours, containment) if applicable
+- [ ] Align units: walls SF, ceilings SF, doors EA (or faces), base/trim LF, specialty as noted
+- [ ] Verify scale and floor plate limits for the 70 LF / 96 SF capture zone
+- [ ] Record level/floor and tenant demising assumptions for 1600 K Street
+
+### Interior
+- [ ] Room-by-room wall SF (partition type, height, open to structure vs ACT)
+- [ ] Column wraps, bulkheads, soffits, and chase enclosures
+- [ ] Ceiling SF by type: ACT grid (often no field paint), GWB flat, open deck, clouds
+- [ ] Corridor vs suite vs core (toilet rooms, elevator lobby, stairs) if on scope sheets
+- [ ] Re-check PT-1: confirm it is wall field paint, not a linear accent or epoxy band
+- [ ] Height conditions: standard, high wall, atrium, stair shaft
+- [ ] Existing surfaces: previously painted GWB, concrete, CMU, metal deck
+- [ ] Patch-and-paint limits vs full elevation repaint at demo/new partitions
+
+### Exterior
+- [ ] Confirm whether exterior envelope is in this package (often none for interior TI)
+- [ ] If exterior sheets exist: metal, concrete, stucco, wood, railing, canopy, doors
+- [ ] Do not price exterior from project name alone; require elevation sheets
+- [ ] Site-facing storefront frames only if finish schedule assigns paint/stain
+
+### Doors & frames
+- [ ] Door schedule: quantity, material, finish (paint / stain / factory / anodized NIC)
+- [ ] Frames, sidelites, borrowed lites, HM vs wood
+- [ ] Count faces or leaves per bid rules; note both sides vs one side
+- [ ] Hardware and vision kits: no paint assumptions without note
+- [ ] Resolve current **0 EA** against schedule; document if all doors are NIC or prefinished
+
+### Specialty
+- [ ] Epoxy / wet-area systems only where schedule calls them (toilets, janitor, trash)
+- [ ] Fire-rated assemblies: intumescent or rated coatings only if specified
+- [ ] Exposed structure, duct, and deck paint if RCP/notes require
+- [ ] Handrails, guardrails, stringers, and stair metal
+- [ ] Wall protection, corner guards, and chair rails (paint vs prefinished)
+- [ ] Mechanical/electrical rooms if on finish plan
+- [ ] Graphics, stripes, or code markings only if shown
+
+### Wallcovering
+- [ ] Finish schedule: WC / vinyl / fabric vs paint; do not assume paint over WC
+- [ ] Removal and surface prep responsibility if WC demo is shown
+- [ ] Primer for new GWB under WC vs under paint
+- [ ] If no WC tag on schedule, leave wallcovering out of paint bid
+
+### Site
+- [ ] Site or civil sheets for freestanding walls, bollards, site metal (only if issued)
+- [ ] Parking stripes / curb paint are not interior paint unless explicitly included
+- [ ] Dumpster enclosure, bike racks, site doors only with drawings
+- [ ] Confirm site scope is excluded if set is shell/TI interior only
+
+---
+
+## Likely finish systems
+
+Based only on available data (PT-1 + commercial address pattern). **Do not treat as schedule truth.**
+
+| System key | Likely use | Typical build (verify on schedule) | Notes |
+|---|---|---|---|
+| PT-1 | Interior walls (tagged in takeoff) | Primer + 2 finish coats latex; sheen per schedule (eggshell/satin common for commercial walls) | Only tagged system in takeoff; need legend |
+| Ceiling paint (untagged) | GWB ceilings if in the 96 SF | Primer + 2 coats flat or eggshell | Confirm ACT is not being painted |
+| Door/frame enamel (not in takeoff) | HM doors/frames if scheduled | Primer + 2 coats acrylic enamel / alkyd per spec | Currently 0 EA ΓÇö high miss risk |
+| Trim/base enamel (not in takeoff) | Wood base/trim if painted | Match door system or schedule | Currently 0 LF |
+| Specialty (not evidenced) | Wet areas / exposed metal | Only if finish plan shows | Do not add without sheets |
+
+No manufacturer, product line, or sheen may be locked without finish schedule or spec section 09 91 00 (or project equivalent).
+
+---
+
+## Missing sheets / RFI questions
+
+**Missing (critical)**
+1. Full drawing index and issued for construction / bid set list
+2. Floor plans with room names and partition types
+3. Interior elevations / enlarged plans
+4. Reflected ceiling plans
+5. Door and frame schedule + hardware set notes affecting finish
+6. Room finish schedule and paint legend (PT-1 definition)
+7. Specifications: painting, prep, and related divisions
+8. Demo plans (patch-and-paint extents)
+9. Exterior elevations only if exterior is claimed in scope
+
+**RFI questions**
+1. What is the written system for **PT-1** (substrate, primer, coats, sheen, approved products)?
+2. Is the current wall quantity intentionally **linear feet**, and what element does it measure?
+3. What is the physical boundary of the 96 SF ceiling area (room numbers / demising lines)?
+4. Are all doors, frames, sidelites, and borrowed lites factory-finished or NIC?
+5. Is base rubber/vinyl NIC, or is wood base painted?
+6. Full repaint of existing elevations vs new work and touch-up only?
+7. Are toilet rooms, stairs, elevator lobbies, and back-of-house in base bid?
+8. Any exterior, parking, or site coatings in this contract?
+9. Occupied tenant rules: phasing, shift work, low-VOC mandates?
+10. Which addenda or bulletins revise finishes after the takeoff date?
+
+---
+
+## Suggested takeoff conditions
+
+1. **Basis of bid:** Paint scope limited to areas and tags shown on issued finish/plan documents; no drawings = quantities are provisional and non-binding for final pricing.
+2. **PT-1 walls:** Hold the 70.54 LF as **provisional**. Re-measure as wall SF using plan length x finish height, or re-code as linear work if it is base/band/chair rail. Do not dual-count.
+3. **Ceilings:** Carry 96.31 SF as **GWB ceiling field paint only** until RCP proves otherwise; ACT tile and grid excluded unless noted to paint.
+4. **Doors & frames:** Carry **allowance or RFI hold at 0 EA** with explicit note that schedule is missing; add EA (or faces) when schedule arrives.
+5. **Base / trim:** Carry **0 LF** with exclusion note unless wood/painted base appears on finish schedule; rubber base NIC.
+6. **Prep:** Standard commercial prep for previously painted GWB assumed only where full repaint is specified; heavy damage, graphics removal, and smoke/soot remediation excluded unless noted.
+7. **Exclusions (default until contradicted by docs):** wallcovering install, exterior envelope, parking stripes, epoxy floors, intumescent fireproofing, factory-finished aluminum, stain-grade millwork clear finishes not scheduled, and work outside the measured zone.
+8. **Unit discipline:** Report walls and ceilings in SF, doors in EA (state faces), base/trim in LF, with height notes for walls over standard.
+9. **Contingency flag:** Mark estimate **incomplete documents** until sheet list, finish schedule, and door schedule are received; requantify after issue.
+10. **Audit trail:** Keep PT-1 tag, raw 70.54 LF and 96.31 SF, and zero counts for doors/base visible in backup so revisions replace rather than silently absorb misses.

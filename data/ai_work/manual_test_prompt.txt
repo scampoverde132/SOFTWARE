@@ -1,0 +1,6 @@
+﻿Project: EST2607009 HARMONY PCS EXT
+TAKEOFF QUANTITIES:
+- PT-1 Walls: 44.66 LF
+- Floor / Area: 9.33 SF
+
+Write a short 5-bullet painting scope of work only. No intro fluff.

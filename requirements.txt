@@ -1,0 +1,3 @@
+pywebview>=5.0
+pyinstaller>=6.0
+# optional (faster PDF server-side later): pymupdf>=1.24

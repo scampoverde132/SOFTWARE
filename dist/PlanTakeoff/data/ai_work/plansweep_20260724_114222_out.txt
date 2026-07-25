@@ -1,0 +1,133 @@
+## Painting plan-sweep checklist
+
+### General
+- [ ] Confirm full bid-set page index (p1ΓÇôp38) maps to disciplines: cover, architectural plans, RCP, elevations, details, schedules, specs
+- [ ] Locate finish legend / room finish schedule / paint schedule (PT-1, PT-2, etc.) and match to current takeoff codes
+- [ ] Confirm scope is paint only vs. paint + wallcovering + specialty coatings + exterior envelope
+- [ ] Note bid-set vs. IFC status; flag ΓÇ£not for constructionΓÇ¥ limits on quantities
+- [ ] Identify new construction vs. renovation/TI; if TI, define paint extents (full height, patch-and-paint, existing to remain)
+- [ ] Cross-check partition types, wall types, and door types against paint notes
+- [ ] Confirm ceiling types (GWB, ACT, open structure, clouds) for paint vs. no-paint
+- [ ] Confirm floor-to-floor heights and any multi-story stacks for vertical wall areas
+- [ ] Verify whether exposed structure, MEP, and underside of decks are painted
+- [ ] Capture general notes on primer, number of coats, sheen, and manufacturer system
+- [ ] Flag phasing, after-hours, occupied-building, or protect-in-place requirements
+- [ ] Confirm whether millwork, casework, and metal specialty items are by painter or by others
+
+### Interior
+- [ ] Takeoff all GWB walls by finish type (PT-1 and any additional PT systems)
+- [ ] Separate field walls vs. accent walls / feature walls / brand color walls
+- [ ] Include soffits, bulkheads, light coves, and ceiling drops
+- [ ] Include GWB ceilings and painted ceiling clouds (if any)
+- [ ] Confirm ACT grid/tile paint scope (usually none) vs. painted GWB ceiling SF
+- [ ] Include columns, pilasters, and shaft walls if scheduled to receive paint
+- [ ] Include corridors, lobbies, elevator lobbies, restrooms, storage, back-of-house
+- [ ] Include restroom wet walls and moisture-resistant GWB paint systems
+- [ ] Include stairwells: walls, stringers, soffits, underside of landings (if painted)
+- [ ] Include elevator hoistway doors/frames only if in painter scope; car interiors typically by others
+- [ ] Include electrical/data/closet interiors if scheduled
+- [ ] Include painted base, chair rail, crown, and other wood/MDF trim if not factory finished
+- [ ] Include window sills, aprons, and interior trim at punched openings
+- [ ] Confirm open-ceiling zones: painted structure, duct, conduit, hangers vs. leave natural
+- [ ] Confirm any existing walls to be prepped/repainted vs. new GWB only
+
+### Exterior
+- [ ] Confirm whether exterior painting is in scope (storefront, canopy, metal panels, stucco, CMU, parking entries)
+- [ ] Takeoff painted exterior metal (canopies, railings, guards, ladders, louvers, bollards) if architecturally finished by paint
+- [ ] Takeoff exterior doors/frames, overhead doors, and coiling door frames if field painted
+- [ ] Confirm exterior soffits, ceiling at entries, and underside of canopies
+- [ ] Confirm parking garage / loading dock walls and ceilings if this address includes them
+- [ ] Flag factory-finished metal panels vs. field-applied coating systems
+- [ ] Confirm any masonry/CMU block filler + paint systems on exterior walls
+- [ ] Confirm sealant/prep notes that affect paint production (not sealant takeoff, but production impact)
+
+### Doors & frames
+- [ ] Count HM door frames (sides + head) by size and paint system
+- [ ] Count HM doors (both faces) by size; note vision lites / louvers
+- [ ] Confirm wood doors: field paint/stain/clear vs. factory finish
+- [ ] Include borrowed lites and sidelite frames if painted
+- [ ] Include pocket/sliding/barn door tracks and frames if painted
+- [ ] Include access doors and panels if field painted
+- [ ] Include fire-rated frame/door paint restrictions (intumescent or approved systems if specified)
+- [ ] Confirm door schedule finish column vs. room finish schedule consistency
+
+### Specialty
+- [ ] Identify epoxy / high-performance coatings in restrooms, kitchens, janitor, trash, mechanical
+- [ ] Identify intumescent fireproofing topcoats or exposed structural fire-resistive coatings
+- [ ] Identify anti-graffiti coatings at street-level or public corridors if commercial street frontage
+- [ ] Identify dry-erase / magnetic / specialty wall coatings
+- [ ] Identify acoustic panels: field paint vs. manufacturer finish
+- [ ] Identify metal stairs, handrails, guards: primer + enamel or powder coat by others
+- [ ] Identify mechanical/electrical rooms: block filler, equipment pads, pipe identification (often by others)
+- [ ] Identify exposed concrete floors/walls requiring sealing or coating (clarify painter vs. flooring)
+- [ ] Identify parking striping / curb paint if site package includes it
+- [ ] Identify graphics, logos, or branded accent bands (typical for retail/fitness; possible if TI brand fit-out)
+
+### Wallcovering
+- [ ] Locate wallcovering schedule / WC types (vinyl, fabric, wall mural, wallpaper)
+- [ ] Confirm walls receiving wallcovering vs. paint only; avoid double-counting
+- [ ] Confirm primer/sealer for wallcovering substrate in painter scope
+- [ ] Confirm removal of existing wallcovering if renovation
+- [ ] Confirm borders, wainscot height splits (paint above/below WC)
+- [ ] Confirm specialty graphic wallcovering vs. painted murals
+
+### Site
+- [ ] Confirm site fencing, gates, bollards, light poles, and site metal if field painted
+- [ ] Confirm site walls, retaining walls, CMU screen walls
+- [ ] Confirm dumpster enclosures and service yard walls
+- [ ] Confirm pavement markings only if drawings assign to painting trade
+- [ ] Confirm protection of landscaping, glazing, and public sidewalk during exterior paint
+
+## Likely finish systems
+- **PT-1 (field walls):** latex eggshell/satin on GWB ΓÇö prime + 2 finish coats (aligns with empty PT-1 Walls takeoff line)
+- **Ceilings:** flat latex on GWB ceilings; confirm ACT not painted
+- **Doors & frames:** alkyd/acrylic enamel on HM frames and doors; wood doors clear/stain or paint per schedule
+- **Trim/base:** semi-gloss enamel if field-painted wood/MDF (Base / Trim LF line present)
+- **Wet areas:** semi-gloss or epoxy-modified acrylic in restrooms/janitor if scheduled
+- **Exterior metals (if any):** high-performance acrylic/urethane system over appropriate primer
+- **CMU/masonry (if any):** block filler + latex or elastomeric per exterior notes
+- **Specialty:** epoxy floor/wall systems and intumescent topcoats only if shown on finish or fireproofing notes
+
+*Inference basis:* commercial-style address (1600 K Street), 38-page bid set, and takeoff headers (PT-1 Walls, Ceilings, Doors, Base/Trim) imply office/commercial TI or base-building paint package; sheet names are page-numbered only, so systems remain typical until finish schedule is read.
+
+## Missing sheets / RFI questions
+1. **Sheet index / drawing list:** Provide named sheets (A0, A2 plans, A6 finishes, A8 schedules, A9 details, I-series interiors, etc.). Current set is only p1ΓÇôp38 with no discipline titles.
+2. **Room finish schedule & paint legend:** Where are PT types, sheens, manufacturers, and room-by-room assignments?
+3. **Door / frame schedule:** Paint vs. factory finish for wood doors, HM frames, and borrowed lites?
+4. **RCP and ceiling finish notes:** Which ceilings are GWB paint vs. ACT vs. open structure paint?
+5. **Wall types / partition types:** Confirm all painted substrates (GWB, CMU, concrete, metal panels).
+6. **Interior elevations / finish plans:** Accent walls, wallcovering extents, millwork paint/stain?
+7. **Specifications:** Division 09 painting section (products, coats, prep, existing surface treatment)?
+8. **Exterior elevations & details:** Is exterior painting in contract, or envelope is prefinished?
+9. **Stair and elevator details:** Stair stringers, guards, hoistway frames in painter scope?
+10. **Existing conditions (if renovation):** Full repaint, cut-in only, or patch-and-paint limits?
+11. **Exposed structure zones:** Paint structure/MEP or leave unpainted?
+12. **Phasing / occupied building:** Protection, VOC limits, work hours affecting production?
+13. **Owner/brand standards:** Any required colors, sheens, or approved manufacturers beyond bid-set notes?
+14. **Current takeoff zeros:** Confirm whether PT-1 Walls / Ceilings / Doors / Base are not yet measured or intentionally out of scope.
+
+## Suggested takeoff conditions
+| Name | Unit type |
+|------|-----------|
+| PT-1 Walls (GWB field) | linear (LF ├ù height) or area (SF) |
+| PT accent / feature walls | area (SF) |
+| GWB ceilings / soffits / bulkheads | area (SF) |
+| Open structure / exposed deck paint | area (SF) |
+| Painted columns / pilasters | area (SF) or count (EA) |
+| Base / wood trim / chair rail | linear (LF) |
+| HM door frames | count (EA) or linear (LF of jamb/head) |
+| HM doors (faces) | count (EA) |
+| Wood doors paint/stain | count (EA) |
+| Borrowed lite / sidelite frames | count (EA) or linear (LF) |
+| Stair walls | area (SF) |
+| Stair metal (stringers/guards) paint | area (SF) or linear (LF) |
+| Restroom / wet-area semi-gloss or epoxy walls | area (SF) |
+| CMU walls (block filler + paint) | area (SF) |
+| Exterior metal (canopy, rail, bollard) | area (SF) or count (EA) |
+| Exterior doors & frames | count (EA) |
+| Exterior soffits / entry ceilings | area (SF) |
+| Wallcovering (WC) | area (SF) |
+| Wallcovering primer only | area (SF) |
+| Intumescent / specialty coatings | area (SF) |
+| Touch-up / patch-and-paint allowance (TI) | area (SF) or lump sum |
+| Protection / masking / occupied work premium | lump sum |

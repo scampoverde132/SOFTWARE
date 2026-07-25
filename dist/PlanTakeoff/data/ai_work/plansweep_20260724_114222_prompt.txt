@@ -1,0 +1,64 @@
+Project: EST2606009 - 1600 K Street
+Job #: EST2606009
+Client: 
+Location: 
+
+DRAWING / SHEET NAMES (38 listed):
+- Bid Set- 1600 K Street · p1
+- Bid Set- 1600 K Street · p2
+- Bid Set- 1600 K Street · p3
+- Bid Set- 1600 K Street · p4
+- Bid Set- 1600 K Street · p5
+- Bid Set- 1600 K Street · p6
+- Bid Set- 1600 K Street · p7
+- Bid Set- 1600 K Street · p8
+- Bid Set- 1600 K Street · p9
+- Bid Set- 1600 K Street · p10
+- Bid Set- 1600 K Street · p11
+- Bid Set- 1600 K Street · p12
+- Bid Set- 1600 K Street · p13
+- Bid Set- 1600 K Street · p14
+- Bid Set- 1600 K Street · p15
+- Bid Set- 1600 K Street · p16
+- Bid Set- 1600 K Street · p17
+- Bid Set- 1600 K Street · p18
+- Bid Set- 1600 K Street · p19
+- Bid Set- 1600 K Street · p20
+- Bid Set- 1600 K Street · p21
+- Bid Set- 1600 K Street · p22
+- Bid Set- 1600 K Street · p23
+- Bid Set- 1600 K Street · p24
+- Bid Set- 1600 K Street · p25
+- Bid Set- 1600 K Street · p26
+- Bid Set- 1600 K Street · p27
+- Bid Set- 1600 K Street · p28
+- Bid Set- 1600 K Street · p29
+- Bid Set- 1600 K Street · p30
+- Bid Set- 1600 K Street · p31
+- Bid Set- 1600 K Street · p32
+- Bid Set- 1600 K Street · p33
+- Bid Set- 1600 K Street · p34
+- Bid Set- 1600 K Street · p35
+- Bid Set- 1600 K Street · p36
+- Bid Set- 1600 K Street · p37
+- Bid Set- 1600 K Street · p38
+
+CURRENT TAKEOFF (if any):
+- PT-1 Walls: 0 LF
+- Ceilings: 0 SF
+- Doors: 0 EA
+- Base / Trim: 0 LF
+
+PLAN TEXT EXTRACT (may be empty):
+(none)
+
+NOTES FROM ESTIMATOR:
+(none)
+
+START YOUR REPLY WITH EXACTLY:
+## Painting plan-sweep checklist
+
+Then groups with "- [ ]" items for: General, Interior, Exterior, Doors & frames, Specialty, Wallcovering, Site.
+Then ## Likely finish systems
+Then ## Missing sheets / RFI questions
+Then ## Suggested takeoff conditions

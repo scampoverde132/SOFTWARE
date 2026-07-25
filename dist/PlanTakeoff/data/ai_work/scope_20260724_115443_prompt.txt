@@ -1,0 +1,17 @@
+Company: WL Painting Inc.
+Project: EST2604009 - SUNRISE PHASE #3
+Job #: EST2604009
+Client: 
+Location: 
+
+TAKEOFF QUANTITIES:
+- PT-1 Walls: 0 LF (style=linear, type=Finishes)
+- Ceilings: 0 SF (style=area, type=Finishes)
+- Doors: 0 EA (style=count, type=Doors & Windows)
+- Base / Trim: 0 LF (style=linear, type=Finishes)
+
+ESTIMATOR NOTES:
+(none)
+
+Write the full bid document now starting with:
+# Painting Scope of Work

@@ -1,0 +1,94 @@
+# Painting Scope of Work
+
+**WL Painting Inc.**  
+**Project:** EST2606009 ΓÇô 1600 K Street  
+**Job #:** EST2606009  
+**Client:** [To be confirmed]  
+**Location:** [To be confirmed]
+
+---
+
+## Proposal Cover
+
+WL Painting Inc. is pleased to submit this Painting Scope of Work for **EST2606009 ΓÇô 1600 K Street**. This document defines the commercial painting work based solely on the takeoff quantities provided. As issued, all takeoff line items report **zero (0)** measurable quantities. No finish schedule, surface schedule, or room-by-room breakdown was included in the estimator notes.
+
+This proposal is therefore issued as a **scope framework and bid shell** pending clarification of quantities, substrates, and finishes. Pricing and production cannot be finalized until revised takeoff data and answers to the RFIs below are received. Upon receipt of complete information, WL Painting Inc. will issue a priced proposal amendment.
+
+---
+
+## Scope of Work
+
+1. **PT-1 Walls** ΓÇö Prepare and paint PT-1 wall surfaces as designated on the finish schedule (to be provided). Current takeoff quantity: **0 LF**. No wall painting is included until a non-zero takeoff is issued.
+
+2. **Ceilings** ΓÇö Prepare and paint ceiling surfaces as designated. Current takeoff quantity: **0 SF**. No ceiling painting is included until a non-zero takeoff is issued.
+
+3. **Doors** ΓÇö Prepare and paint doors (faces, edges, and frames as specified) as designated. Current takeoff quantity: **0 EA**. No door painting is included until a non-zero takeoff is issued.
+
+4. **Base / Trim** ΓÇö Prepare and paint base and trim as designated. Current takeoff quantity: **0 LF**. No base/trim painting is included until a non-zero takeoff is issued.
+
+5. **General** ΓÇö All work, when quantities are confirmed, will be performed in accordance with manufacturer data sheets, industry standard surface preparation, and applicable project specifications. Mobilization, protection of adjacent surfaces, and final cleanup will be included for the confirmed scope only.
+
+---
+
+## Inclusions
+
+- Labor and materials for the painting items listed above **only to the extent quantities are later confirmed greater than zero**
+- Surface preparation appropriate to the substrate and specified finish system (when defined)
+- Application of primer and finish coats per the approved product system (when specified)
+- Protection of floors, fixtures, and adjacent work during painting operations for the confirmed scope
+- Daily and final cleanup of painting-related debris for the confirmed scope
+- Coordination with the general contractorΓÇÖs schedule for painting activities once quantities and phasing are established
+
+---
+
+## Exclusions
+
+- All work associated with **PT-1 Walls (0 LF)**, **Ceilings (0 SF)**, **Doors (0 EA)**, and **Base / Trim (0 LF)** until revised takeoff quantities are issued
+- Any surface, room, elevation, or finish not listed in the takeoff data
+- Wallcovering, specialty coatings, epoxy, fireproofing, or industrial systems (not identified)
+- Drywall repair, patching, skim coat, or finishing beyond normal paint prep
+- Carpentry, door hardware removal/reinstall, glazing, or millwork fabrication
+- Floor coatings, concrete staining, or polished concrete
+- Exterior painting (not identified in takeoff)
+- Scaffolding, swing stages, or lift rental beyond standard commercial access (to be determined when scope is defined)
+- After-hours, weekend, or premium-time work unless separately authorized
+- Permits, bonds, testing, or third-party inspections
+- Design, color selection, or mockups beyond one standard sample (when finishes are specified)
+- Work on occupied areas requiring temporary relocation or special ICRA/containment (not specified)
+
+---
+
+## RFIs
+
+1. All takeoff quantities are currently **0** (PT-1 Walls: 0 LF; Ceilings: 0 SF; Doors: 0 EA; Base / Trim: 0 LF). Please confirm whether this is intentional (no paint scope) or provide corrected takeoff quantities.
+
+2. Please provide the finish schedule (product systems, sheens, colors) for PT-1 and any other paint types.
+
+3. Please confirm client name and full project address/location for EST2606009 ΓÇô 1600 K Street.
+
+4. Clarify unit basis for PT-1 Walls (listed as LF). Confirm if wall quantity should be in **SF** (area) rather than linear feet.
+
+5. Identify substrates (new drywall, existing painted, CMU, metal, wood, etc.) for walls, ceilings, doors, and trim.
+
+6. Confirm which door components are in scope (door slab only, frame, both sides, sidelites, etc.) once door count is provided.
+
+7. Advise of any phasing, occupancy constraints, or schedule milestones that affect painting.
+
+8. Provide drawings/specs references (sheet numbers, specification sections) used for the takeoff so scope boundaries can be verified.
+
+---
+
+## Summary
+
+| Item            | Quantity | Unit |
+|-----------------|----------|------|
+| PT-1 Walls      | 0        | LF   |
+| Ceilings        | 0        | SF   |
+| Doors           | 0        | EA   |
+| Base / Trim     | 0        | LF   |
+
+**Status:** Scope framework only ΓÇö **not priced**. No paint quantities are currently available to bid. WL Painting Inc. will revise this document and provide a firm proposal upon receipt of corrected takeoff data and RFI responses.
+
+Respectfully submitted,  
+**WL Painting Inc.**  
+Job # EST2606009

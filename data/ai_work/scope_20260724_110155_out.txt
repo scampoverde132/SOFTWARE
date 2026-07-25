@@ -1,0 +1,103 @@
+﻿# WL Painting Inc.  
+**Painting Proposal ΓÇö Scope of Work**
+
+| | |
+|---|---|
+| **Project** | Harmony |
+| **Job #** | EST2607009 |
+| **Client** | *TBD* |
+| **Location** | *TBD* |
+| **Scope Type** | Exterior painting only |
+
+---
+
+## 1) SCOPE OF WORK
+
+Based on the provided takeoff (exterior only):
+
+1. **General**  
+   Provide all labor, materials, equipment, and supervision required to complete exterior painting of PT-1 wall surfaces as quantified below, in accordance with manufacturer recommendations and industry standard commercial painting practices.
+
+2. **Surface Preparation**  
+   Prepare exterior PT-1 wall surfaces to receive paint, including cleaning of loose dirt/debris, scraping of failed coatings where present, and feather-sanding of edges as required for a suitable substrate. Spot-prime bare or previously unfinished areas as needed prior to finish coats.
+
+3. **Primer**  
+   Spot-prime or full-prime exterior PT-1 wall surfaces as required by substrate condition and finish system (product and number of coats to be confirmed ΓÇö see RFIs).
+
+4. **Finish ΓÇö Exterior Walls (PT-1)**  
+   Apply finish coating system to exterior walls designated **PT-1**.  
+   **Quantity (takeoff):** **44.66 LF**  
+   Finish coats, color, sheen, and product system per paint schedule / owner selection (to be confirmed).
+
+5. **Not Included in Takeoff**  
+   No quantities were provided for ceilings, interior walls, doors, frames, trim, railings, metal, concrete, or other surfaces. These items are excluded unless added by change order after clarification.
+
+6. **Cleanup**  
+   Daily and final cleanup of painting-related debris in work areas. Leave surfaces clean and free of paint overspray, drips, and spatters attributable to this work.
+
+---
+
+## 2) INCLUSIONS
+
+- Exterior painting of **PT-1 walls only**, limited to the takeoff quantity: **44.66 LF**
+- Standard surface prep appropriate to existing exterior wall condition (cleaning, scrape of failed coating, spot prime as needed)
+- Primer as required for substrate/system (system TBD)
+- Finish coat(s) for PT-1 per approved system/color (TBD)
+- Labor, materials, and standard application equipment for the scoped work
+- Drop cloths / basic protection of adjacent surfaces immediately adjacent to the work area
+- Final cleanup of painting debris related to this scope
+
+---
+
+## 3) EXCLUSIONS / QUALIFICATIONS
+
+**Exclusions (unless specifically added in writing):**
+
+- Interior painting of any kind  
+- Ceilings, soffits, fascia, eaves, columns, beams (no quantities provided)  
+- Doors, frames, windows, trim, railings, fences, gates, metal, concrete, masonry accents (no quantities provided)  
+- Pressure washing, chemical stripping, or full coating removal beyond standard scrape/prep  
+- Substrate repair (stucco patch, wood replacement, caulking beyond minor paint-related touch, waterproofing, sealants as a system)  
+- Lead / asbestos testing or abatement  
+- Scaffolding, boom lifts, or specialty access beyond standard ladders (height/access not specified)  
+- Protection of landscaping, vehicles, or extensive building wrap beyond immediate work area  
+- Color mock-ups, sample boards, or multi-color schemes beyond a single PT-1 system unless specified  
+- Night/weekend premium time or phased occupancy premiums  
+- Permit fees, bonds, or builderΓÇÖs risk insurance beyond standard liability  
+- Work outside the **44.66 LF** PT-1 exterior wall quantity  
+
+**Qualifications:**
+
+- Quantity is **linear feet (LF)** as stated in takeoff; wall height, number of faces, and actual square footage are **not** defined. Price and production will be based on clarified height/area if LF alone is insufficient for field measurement.  
+- Scope is **exterior only** per estimator notes.  
+- Unit pricing and final bid assume one continuous mobilization unless otherwise agreed.  
+- Existing coating type, adhesion, and substrate condition have not been verified from the data provided.
+
+---
+
+## 4) RFI / CLARIFICATIONS
+
+| # | Item | Why Needed |
+|---|------|------------|
+| RFI-01 | **Client name** and billing/contact info | Proposal header incomplete |
+| RFI-02 | **Project address / location** | Mobilization, access, and site logistics |
+| RFI-03 | **PT-1 paint system** ΓÇö manufacturer, product, primer, number of coats, sheen | Spec not provided |
+| RFI-04 | **Color schedule** for PT-1 (and any accent colors) | Finish selection missing |
+| RFI-05 | **Wall height(s)** and whether 44.66 LF is perimeter, base line, or other | LF only; SF not provided for walls |
+| RFI-06 | **Substrate** (stucco, wood siding, fiber cement, metal, masonry, etc.) and existing coating condition | Prep and system depend on substrate |
+| RFI-07 | Confirm **no other exterior surfaces** (trim, doors, soffit, etc.) are in painting scope | Takeoff lists only PT-1 walls |
+| RFI-08 | **Access** ΓÇö single story vs multi-story; ladder vs lift; occupied site constraints | Affects equipment and cost |
+| RFI-09 | Preferred **schedule / start window** and any phasing | Sequencing |
+| RFI-10 | Any **spec section** (e.g., 09 91 13) or GC finish schedule to follow | Spec compliance |
+
+---
+
+## 5) SHORT PROPOSAL COVER
+
+WL Painting Inc. is pleased to submit this exterior painting proposal for **Project Harmony (Job # EST2607009)**. Our scope is limited to exterior **PT-1 wall** painting as quantified in the takeoff (**44.66 LF**), including standard preparation, primer as required, and finish coating per the approved system. Client, location, paint specification, wall height/substrate, and related exterior items are not fully defined in the current data; we request the RFIs above so we can finalize pricing and schedule. We look forward to coordinating with you to complete a clean, durable exterior finish for this project.
+
+---
+
+**WL Painting Inc.**  
+Job #: EST2607009 | Project: Harmony  
+*Proposal draft based solely on provided takeoff quantities ΓÇö do not invent SF or additional line items without revised takeoff.*

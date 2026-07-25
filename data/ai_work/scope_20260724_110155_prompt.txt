@@ -1,0 +1,20 @@
+Company: WL Painting Inc.
+Project: Harmony
+Job #: EST2607009
+Client: 
+Location: 
+
+TAKEOFF QUANTITIES:
+- PT-1 Walls: 44.66 LF (style=linear, type=Finishes)
+
+ESTIMATOR NOTES:
+Exterior only
+
+Produce:
+1) SCOPE OF WORK — numbered painting scope (prep, primer, finish, trim, ceilings, walls, doors/frames as applicable)
+2) INCLUSIONS
+3) EXCLUSIONS / QUALIFICATIONS
+4) RFI / CLARIFICATIONS list (only if data is missing)
+5) SHORT PROPOSAL COVER paragraph (2–4 sentences)
+
+Keep it bid-ready for email/PDF.

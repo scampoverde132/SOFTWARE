@@ -1,0 +1,215 @@
+# Painting plan-sweep checklist
+
+**Project:** EST2604009 ΓÇö SUNRISE PHASE #3  
+**Job #:** EST2604009  
+**Role:** Painting plan-sweep (working paper for estimators)  
+**Step:** 1 of 2 ΓÇö drive formal WL Painting scope  
+**Plan extract / estimator notes:** None provided  
+**Current takeoff:** All zero (PT-1 walls 0 LF ┬╖ ceilings 0 SF ┬╖ doors 0 EA ┬╖ base/trim 0 LF)
+
+---
+
+## Project snapshot
+
+| Item | Status |
+|------|--------|
+| Project name | SUNRISE PHASE #3 |
+| Client / location | Not provided |
+| Occupancy / program | **Unconfirmed** ΓÇö treat as commercial / multi-room interior until clarified; carry gym/fitness miss-items as open checks |
+| Drawing set received | 5 sheets only: `SE3 ΓÇö Mt`, `SE3 ┬╖ p2`, `SE3 ┬╖ p3`, `SE3 ┬╖ p4`, `SE3 ┬╖ p5` |
+| Architectural / finish set | **Not listed** (no A-, I-, FS-, finish legend, or specs in sheet list) |
+| Specs (Division 09) | **Not provided** |
+| Takeoff readiness | **Not ready** ΓÇö zero quantities; no wall/ceiling/door basis from listed sheets alone |
+
+**Inference from sheet names only:** ΓÇ£SE3ΓÇ¥ series with Mt + p2ΓÇôp5 reads like a partial package (possibly structural elevations, sections, or a trade-specific set labeled SE3). It is **not** a complete architectural finish set. Painting scope cannot be closed without A-plans, RCPs, door schedules, finish schedules, and elevations.
+
+---
+
+## Drawing triage
+
+| Sheet | Likely content (inferred) | Painting use | Priority |
+|-------|---------------------------|--------------|----------|
+| SE3 ΓÇö Mt | Title / cover / map / index for SE3 package | Sheet index, drawing list, general notes only | Medium ΓÇö confirm full index |
+| SE3 ┬╖ p2 | Package page 2 (unknown discipline) | Possible elevations/sections; scan for notes, materials | High if elevations |
+| SE3 ┬╖ p3 | Package page 3 | Same | High if room/finish data |
+| SE3 ┬╖ p4 | Package page 4 | Same | High if details |
+| SE3 ┬╖ p5 | Package page 5 | Same | High if schedules |
+
+**Triage conclusion:** Incomplete for painting. Flag **missing full architectural set** before any firm SF/LF/EA takeoff. Do not treat SE3 pages as finish schedule authority unless they explicitly carry paint types / room finish matrices.
+
+---
+
+## Painting checklist
+
+### General
+- [ ] Obtain full sheet index and confirm SE3 is not the only issued package
+- [ ] Request architectural plans (floor plans), RCPs, interior elevations, exterior elevations
+- [ ] Request finish schedule / room finish matrix and paint legend (PT-1, PT-2, etc.)
+- [ ] Request door & frame schedule + hardware set notes affecting finish
+- [ ] Request Division 09 specifications (paint systems, prep, VOC, warranty)
+- [ ] Confirm project phase boundaries for Phase #3 (what is new vs existing vs NIC)
+- [ ] Confirm bid inclusions/exclusions (owner equipment, FF&E, graphics, signage)
+- [ ] Confirm prevailing wage / union / insurance / tax status if applicable
+- [ ] Clarify substrate assumptions (GWB, CMU, metal, wood, concrete, GFRC)
+- [ ] Confirm primer requirements by substrate and condition (new vs existing)
+- [ ] Confirm touch-up vs full repaint of adjacent existing work
+- [ ] Document access, phasing, occupied-building constraints, and work hours
+- [ ] Confirm mock-up / sample approval requirements
+- [ ] Confirm protection, masking, and final clean responsibilities
+
+### Interior
+- [ ] Walls ΓÇö all rooms in Phase #3 (map PT systems; currently PT-1 = 0 LF)
+- [ ] Ceilings ΓÇö painted GWB / exposed structure / soffits / bulkheads (currently 0 SF)
+- [ ] Accent walls / brand colors / feature walls
+- [ ] Columns, pilasters, and freestanding partitions
+- [ ] Interior exposed steel / misc. metals (if paint, not galvanized leave-as-is)
+- [ ] Stairs, stringers, risers, handrail/guard (paint vs factory finish)
+- [ ] Toilet rooms / wet areas ΓÇö enamel / moisture-resistant systems
+- [ ] Storage, MEP rooms, corridors, lobbies ΓÇö system per schedule
+- [ ] Back-of-house vs public finish grade
+- [ ] Above-ceiling / non-visible surfaces (only if specified)
+- [ ] Paint grade vs wallcovering zones (no double-count)
+- [ ] Patch & prime existing openings / demo scars if remodel interface
+
+**Gym / fitness typical miss-items (carry until occupancy confirmed or N/A):**
+- [ ] Cardio / free-weight / functional training zones ΓÇö wall SF and height to structure
+- [ ] Mirror walls ΓÇö paint stops / returns / frames / edges (who paints?)
+- [ ] Rubber floor / sports floor interface ΓÇö base type and paint hold-back
+- [ ] Locker rooms / wet locker / showers ΓÇö epoxy or high-performance wall/ceiling systems
+- [ ] Sauna / steam / spa rooms ΓÇö specialty high-heat/humidity systems or NIC
+- [ ] Group fitness / cycle studio ΓÇö acoustic panels vs paint; ceiling color
+- [ ] Juice bar / retail / reception ΓÇö accent paint and millwork field finish
+- [ ] Kids club / offices / training rooms
+- [ ] Ceiling fans / exposed duct / structure paint (if open ceiling)
+- [ ] Equipment shadows / wall protection height ΓÇö paint full height vs wainscot
+- [ ] Brand stripe / logo wall paint (vs vinyl graphics by others)
+- [ ] TV / tablet mounts ΓÇö cutouts, boxes, and touch-up responsibility
+
+### Exterior
+- [ ] Exterior wall field paint / stain / elastomeric (if any in Phase #3)
+- [ ] Soffits, fascia, eaves, canopies
+- [ ] Exterior doors, frames, hollow metal
+- [ ] Railings, bollards, site metal (paint vs galvanized)
+- [ ] Parking structure / ramp walls if in phase
+- [ ] Existing exterior touch-up at phase tie-ins
+- [ ] Confirm climate / exposure system (alkyd vs acrylic vs high-build)
+
+### Doors & frames
+- [ ] Hollow metal frames ΓÇö prime + finish coats (count openings; currently 0 EA)
+- [ ] Hollow metal doors ΓÇö faces and edges
+- [ ] Wood doors ΓÇö field finish vs factory prefinish (NIC if prefinished)
+- [ ] Door frames at new vs existing walls
+- [ ] Borrowed lites / sidelites / transoms ΓÇö frames only vs glazing stops
+- [ ] Access panels, fire extinguisher cabinets ΓÇö paint to match walls if specified
+- [ ] Overhead / coiling doors ΓÇö field paint if required
+- [ ] Confirm factory-primed vs raw steel; include primer where missing
+
+### Specialty
+- [ ] Epoxy / resinous wall systems (locker, kitchen, mop, trash)
+- [ ] Intumescent / fireproofing topcoat (if structural steel in SE package)
+- [ ] Anti-graffiti / high-traffic corridor coatings
+- [ ] Dry-erase / magnetic paint zones
+- [ ] Floor coatings (only if in painting scope ΓÇö often separate trade)
+- [ ] Mechanical equipment / rooftop units (often by others)
+- [ ] Conduit, piping, hangers ΓÇö paint if exposed and specified
+- [ ] Exterior/interior signage backing panels
+- [ ] Caulk & sealant for paint-grade joints (who owns?)
+
+### Wallcovering
+- [ ] Confirm any WC / vinyl / fabric zones on finish schedule (none listed)
+- [ ] Wallcovering prep (skim, primer/sealer) in painting vs WC trade
+- [ ] Border / accent strips
+- [ ] Removal of existing wallcovering if remodel
+- [ ] Exclude WC supply/install unless explicitly in painting scope
+
+### Site
+- [ ] Site bollards, gates, fences (paint)
+- [ ] Dumpster enclosures / screen walls
+- [ ] Light pole bases / utility screens if painted
+- [ ] Striping / pavement markings (usually separate ΓÇö confirm)
+- [ ] Landscape walls / CMU site walls
+- [ ] Phase #3 site limits vs future phases
+
+---
+
+## Likely finish systems
+
+*Systems are provisional until finish schedule / specs arrive. Use as bid-structure placeholders only.*
+
+| Code (placeholder) | Typical use | Assumed system (verify) |
+|--------------------|-------------|-------------------------|
+| **PT-1** | General interior walls | Latex primer + 2 coats eggshell/satin acrylic (or per spec) |
+| **PT-2** | Ceilings / soffits | Flat latex, 2 coats over primer as required |
+| **PT-3** | Wet / toilet / locker | Semi-gloss acrylic or epoxy-modified system |
+| **PT-4** | Doors & HM frames | DTM / alkyd or waterborne enamel, 2 finish coats over primer |
+| **PT-5** | Accent / brand walls | Same as PT-1, color change; may need deep-base coats |
+| **PT-E** | Exterior (if any) | Exterior acrylic or elastomeric per elevation notes |
+| **EP-1** | Specialty wet walls | Epoxy wall system (locker/shower) ΓÇö confirm trade |
+| **ST-1** | Exposed structure / steel | Shop prime + field finish or intumescent + topcoat |
+
+**Substrate notes to lock later:** GWB Level 4/5; CMU fill + block filler; ferrous metal primer; galvanized prep; concrete densifier vs paint.
+
+---
+
+## Missing sheets / RFI questions
+
+### Missing sheets (request immediately)
+1. Full drawing index / sheet list for Phase #3  
+2. Architectural floor plans (all levels in phase)  
+3. Reflected ceiling plans  
+4. Interior elevations and enlarged restroom/locker plans  
+5. Exterior elevations (if exterior paint in phase)  
+6. Door schedule, frame types, and door elevations  
+7. Room finish schedule / finish legend / paint schedule  
+8. Wall types / partition types (height, substrate)  
+9. Specifications Division 09 91 00 (or project paint section)  
+10. Any addenda, sketch revisions, or finish alternates  
+
+### RFI questions
+1. What is the occupancy/program for SUNRISE PHASE #3 (office, multifamily, retail, gym/fitness, other)?  
+2. Do sheets `SE3 ΓÇö Mt` through `SE3 ┬╖ p5` constitute the complete bid set, or is an architectural package forthcoming?  
+3. What are the Phase #3 physical limits (rooms, floors, exterior elevations) vs previous phases?  
+4. Is there a paint legend defining PT-1 and related systems? Current takeoff shows PT-1 walls at 0 LF ΓÇö please issue quantities basis or allow plan takeoff from full set.  
+5. Are hollow metal doors/frames field-painted or factory finished?  
+6. Are wood doors prefinished (exclude) or field stained/painted?  
+7. Any epoxy, intumescent, or specialty coatings in painting scope?  
+8. Open ceilings: paint structure, deck, duct, and conduit ΓÇö yes/no?  
+9. Existing surfaces: full repaint, blend, or new work only?  
+10. Who owns wallcovering, graphics, mirrors, and rubber base interfaces?  
+11. Confirm exterior painting in Phase #3 ΓÇö in or out.  
+12. Phasing / occupied site / after-hours work requirements?  
+
+---
+
+## Suggested takeoff conditions
+
+Use these as **proposal / takeoff assumptions** until RFIs close:
+
+1. **Basis of bid:** Takeoff deferred pending full architectural and finish documents; current zeros are placeholders, not final scope.  
+2. **Phase limit:** Paint new construction and altered surfaces within Phase #3 limits only; existing adjacent spaces NIC unless noted for blend.  
+3. **Interior walls:** Measure paint-grade wall area or LF ├ù height from plans; exclude WC zones, tile full-height, and FRP unless paint specified.  
+4. **Ceilings:** Paint GWB ceilings and painted soffits only; ACT grid/tile NIC; exposed structure only if scheduled.  
+5. **Doors & frames:** Count HM frames and doors as EA openings; wood prefinished NIC; glass NIC.  
+6. **Base / trim:** Paint wood base/trim only if scheduled; rubber/vinyl base by others.  
+7. **Height:** Standard to underside of ceiling or noted wall height; atrium/high walls separate line.  
+8. **Colors:** Up to X standard colors (define with GC); deep/accent colors and brand colors as allowance or unit prices.  
+9. **Prep:** Level 4 GWB assumed; Level 5 only if specified; CMU block fill where CMU is painted.  
+10. **Exclusions (typical):** Wallcovering install, floor coatings unless noted, parking striping, equipment, FF&E, signage/vinyl graphics, caulking of expansion joints by others, patch beyond normal paint prep.  
+11. **Unit prices recommended:** Accent wall SF; HM door/frame EA; high-reach >10'ΓÇô12'; epoxy wall SF; after-hours premium.  
+12. **Gym/fitness hold:** Until program confirmed, keep separate allowance lines for locker epoxy, open-structure paint, and brand accent walls.
+
+---
+
+## Handoff notes for proposal writer
+
+- **Do not present firm SF/LF/EA** from this sweep alone ΓÇö drawing set is incomplete and all current quantities are zero.  
+- Lead with **qualifications**: scope based on partial SE3 package; final numbers after full A-set + finish schedule.  
+- Structure WL Painting scope outline as: *General conditions ΓåÆ Interior field ΓåÆ Ceilings ΓåÆ Doors/frames ΓåÆ Specialty ΓåÆ Exterior (if any) ΓåÆ Exclusions ΓåÆ Unit prices ΓåÆ Allowances*.  
+- Call out **Phase #3 boundary** and **existing-to-new blend** as commercial risk items.  
+- Keep **gym/fitness miss-items** as open checklist until client confirms occupancy; if not a fitness build, mark N/A in Step 2.  
+- SE3 sheets may contain structural steel ΓÇö if so, clarify **field paint vs fireproofing topcoat** ownership with GC.  
+- Step 2 (formal WL Painting scope): after missing sheets/RFI answers, convert checked items into include/exclude language and takeoff quantities.
+
+---
+
+*End of Step 1 plan-sweep ΓÇö ready for document request + RFI issue, then formal scope.*

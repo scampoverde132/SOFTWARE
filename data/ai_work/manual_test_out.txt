@@ -1,0 +1,1 @@
+﻿Checking the workspace for takeoff context so the 5-bullet scope matches the project data.

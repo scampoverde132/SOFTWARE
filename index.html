@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PlanTakeoff — Digital Quantity Takeoff</title>
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark">PT</div>
+        <span>PlanTakeoff</span>
+        <span style="font-size:10px;color:var(--text-dim);font-weight:500;margin-left:4px">v1.0</span>
+      </div>
+      <nav class="menu-bar">
+        <button type="button" id="menuScanEstimates" title="Scan Samuel Bids Estimates folders">Scan Jobs</button>
+        <button type="button" id="menuExport" title="Backup all takeoffs">Export Backup</button>
+        <button type="button" id="menuImport" title="Restore from backup">Import Backup</button>
+        <!-- kept for advanced use; hidden via CSS class "menu-adv" -->
+        <button type="button" id="menuFileNew" class="menu-adv">New Bid</button>
+        <button type="button" id="menuImportPlan" class="menu-adv">Import Plan…</button>
+        <button type="button" id="menuNewFolders" class="menu-adv">New Folders</button>
+        <button type="button" id="menuTabs" class="menu-adv">Tabs…</button>
+        <button type="button" id="menuFit" class="menu-adv">Fit Plan</button>
+      </nav>
+      <div class="header-meta" id="headerMeta">No bid selected</div>
+    </header>
+
+    <div class="tab-bar" id="tabBar" role="tablist">
+      <button class="tab active" data-tab="library" type="button">Jobs (Estimates)</button>
+      <button class="tab locked" data-tab="takeoff" type="button">Takeoff</button>
+      <button class="tab locked" data-tab="summary" type="button">Summary</button>
+      <button class="tab locked" data-tab="estimate" type="button">Estimate</button>
+      <button class="tab locked" data-tab="scope" type="button">Scope / AI</button>
+      <button class="tab" data-tab="projects" type="button">Open Jobs</button>
+      <!-- Advanced / optional — hidden by default via optional + prefs -->
+      <button class="tab optional" data-tab="folders" type="button">New Folders</button>
+      <button class="tab locked optional" data-tab="cover" type="button">Cover Sheet</button>
+      <button class="tab locked optional" data-tab="worksheet" type="button">Worksheet</button>
+      <button class="tab locked optional" data-tab="budget" type="button">Budget</button>
+      <button class="tab locked optional" data-tab="notes" type="button">Notes</button>
+      <button class="tab optional" data-tab="resources" type="button">Help</button>
+    </div>
+
+    <main class="tab-panels">
+      <!-- ESTIMATES LIBRARY (reads Samuel Bids / Estimates YYYY) -->
+      <section class="panel" id="panel-library">
+        <div class="toolbar">
+          <div class="group">
+            <label class="small">Year folder</label>
+            <select id="libraryYear" style="min-width:160px"></select>
+            <button type="button" class="primary" id="btnScanLibrary">Scan Jobs</button>
+          </div>
+          <div class="group">
+            <label class="small">Filter</label>
+            <input type="text" id="libraryFilter" placeholder="EST# or project name…" style="width:220px" />
+          </div>
+          <div class="group">
+            <span class="chip" id="libraryRootLabel">Bids root: —</span>
+            <span class="chip" id="libraryStatus">Server offline — run Launch PlanTakeoff.bat</span>
+          </div>
+        </div>
+        <div class="hint">
+          Click a job → takeoff opens with the first plan. Other drawings load in the background.
+          Re-open only adds <em>new</em> files from <code>01 Drawings</code>.
+        </div>
+        <div class="grid-wrap" id="libraryGrid"></div>
+        <div class="panel-sub" id="libraryDetail" style="padding:10px 16px;display:none"></div>
+      </section>
+
+      <!-- NEW FOLDERS (FOLDERS.bat equivalent) -->
+      <section class="panel" id="panel-folders">
+        <div class="panel-title">Create Project Folders</div>
+        <div class="panel-sub">
+          Same structure as your Estimates workflow and <code>FOLDERS.bat</code>:
+          <strong>EST###### - Description</strong> with 01 Drawings, 02 Estimates, 03 Pictures, 04 Notes.
+        </div>
+        <div class="form-grid" style="max-width:720px">
+          <div class="field">
+            <label>Year</label>
+            <input type="number" id="folderYear" min="2020" max="2099" />
+          </div>
+          <div class="field">
+            <label>Month # (optional)</label>
+            <input type="text" id="folderMonth" placeholder="e.g. 07 — leave blank for year root" maxlength="2" />
+          </div>
+          <div class="field">
+            <label>Project code</label>
+            <div style="display:flex;gap:6px">
+              <input type="text" id="folderCode" placeholder="EST2607001" />
+              <button type="button" id="btnSuggestCode" style="white-space:nowrap">Suggest</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Description</label>
+            <input type="text" id="folderDesc" placeholder="e.g. 4R St NW Unit 5" />
+          </div>
+          <div class="field full">
+            <label><input type="checkbox" id="folderTakeoff" checked /> Add Take off folder under 02 Estimates</label>
+          </div>
+          <div class="field full">
+            <button type="button" class="primary" id="btnCreateFolder">Create Project Folder</button>
+          </div>
+        </div>
+
+        <div class="panel-title" style="margin-top:8px">Batch create</div>
+        <div class="panel-sub">One project per line: <code>EST2607002 | Project Name Here</code> or just <code>Project Name</code> (auto code).</div>
+        <div class="form-grid" style="max-width:720px">
+          <div class="field full">
+            <label>Projects</label>
+            <textarea id="folderBatch" rows="8" placeholder="EST2607002 | BOA York Rd&#10;Sunrise Phase 3&#10;Flagship Carwash Bowie"></textarea>
+          </div>
+          <div class="field full">
+            <button type="button" class="primary" id="btnCreateBatch">Create All Folders</button>
+          </div>
+          <div class="field full">
+            <pre id="folderLog" style="background:var(--bg-input);padding:10px;border-radius:6px;border:1px solid var(--border);min-height:60px;white-space:pre-wrap;color:var(--text-dim)"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPEN JOBS (takeoffs already opened from library) -->
+      <section class="panel projects-panel" id="panel-projects">
+        <div class="toolbar">
+          <div class="group">
+            <button type="button" class="danger" id="btnDeleteProject">Remove from list</button>
+            <button type="button" id="btnDuplicateProject" class="menu-adv">Duplicate</button>
+            <button type="button" id="btnNewProject" class="menu-adv">+ Blank bid</button>
+          </div>
+          <div class="group">
+            <label class="small">Filter</label>
+            <input type="text" id="projectFilter" placeholder="Search open jobs…" style="width:200px" />
+          </div>
+        </div>
+        <div class="hint">Jobs you opened from the library. Prefer <strong>Jobs (Estimates)</strong> to open from disk.</div>
+        <div class="grid-wrap">
+          <table class="data-grid" id="projectsTable">
+            <thead>
+              <tr>
+                <th>Job #</th>
+                <th>Folder / Estimate name</th>
+                <th>Client</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Estimator</th>
+                <th>Bid Date</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="empty-state" id="projectsEmpty" hidden>
+            <h2>No open jobs</h2>
+            <p>Go to <strong>Jobs (Estimates)</strong>, scan, then Open Job on a folder.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAKEOFF -->
+      <section class="panel" id="panel-takeoff">
+        <div class="toolbar" id="takeoffToolbar">
+          <div class="group">
+            <button type="button" data-tool="select" title="Select (V) — move / reshape marks">Select</button>
+            <button type="button" data-tool="pan" title="Pan — or hold right-click / Space">Pan</button>
+            <button type="button" data-tool="linear" class="active-tool" title="Linear (L)">Linear</button>
+            <button type="button" data-tool="area" title="Area (A)">Area</button>
+            <button type="button" data-tool="count" title="Count (C)">Count</button>
+            <button type="button" data-tool="room" title="Room package — outline floor, auto ceiling/walls/base/trim">Room</button>
+            <button type="button" data-tool="deduct" title="Opening deduction — cut window/door from selected parent">Deduct</button>
+            <button type="button" data-tool="measure" class="menu-adv" title="Temp measure (M)">Measure</button>
+          </div>
+          <div class="group" title="Linear: 2-click segment or multi-point">
+            <button type="button" data-linear-mode="segment" class="active-tool" title="2 clicks = one run">Seg</button>
+            <button type="button" data-linear-mode="polyline" title="Multi-point then Enter">Poly</button>
+          </div>
+          <div class="group">
+            <label class="small">Scale</label>
+            <select id="scaleSelect"></select>
+            <button type="button" id="btnCalibrate" title="Click two points on a known dimension">Calibrate…</button>
+            <button type="button" id="btnScaleFromMark" title="Use selected mark as known length (fix scale)">From mark…</button>
+          </div>
+          <div class="group">
+            <button type="button" id="btnFitView">Fit</button>
+            <button type="button" id="btnDeleteTakeoff" class="danger" title="Delete selected (Del)">Delete</button>
+            <button type="button" id="btnLoadPlan" class="menu-adv" title="Manual plan load">Load file…</button>
+            <input type="file" id="filePlan" accept="image/*,.pdf,application/pdf" hidden />
+          </div>
+        </div>
+        <div class="digitize-bar" id="digitizeBar" hidden>
+          <div id="digitizeBarLabel"></div>
+          <span class="dig-keys">1–9 condition · Tab next · Shift ortho · Esc cancel</span>
+        </div>
+        <div class="hint" id="takeoffHint">
+          PlanSwift-style: pick a <strong>condition</strong> in the list, then click the plan. Stay on that condition until you switch.
+        </div>
+        <!-- Selected mark properties (reassign, add points, patterns) -->
+        <div class="mark-props-bar" id="markPropsBar" hidden>
+          <div class="mark-props-title">Selected mark</div>
+          <div class="mark-props-row">
+            <label class="small">Assign to</label>
+            <select id="markReassignCond" title="Move this mark to another condition"></select>
+            <label class="small">× Typical</label>
+            <input type="number" id="markMultiplier" min="1" step="1" value="1" style="width:64px" title="Multiply this mark (e.g. 12 identical rooms)" />
+            <button type="button" id="btnMarkInsert" title="Click an edge to insert a vertex (I)">+ Point on edge</button>
+            <button type="button" id="btnMarkAppend" title="Click to add points and grow the shape (N)">Add points</button>
+            <button type="button" id="btnMarkDelVertex" title="Delete yellow grip vertex (X)">Del vertex</button>
+            <button type="button" id="btnMarkToArea" title="Close polyline as area (3+ points)">→ Area</button>
+            <button type="button" id="btnMarkRoomPack" title="Apply room package to selected area polygon">Room package</button>
+            <button type="button" id="btnMarkDoneEdit" title="Exit insert/add mode">Done</button>
+          </div>
+          <div class="mark-props-row">
+            <label class="small"><input type="checkbox" id="chkShowSegLabels" checked /> Show segment LF on plan</label>
+            <label class="small"><input type="checkbox" id="chkShowObjTotals" checked /> Show object totals</label>
+            <span class="chip" id="markPropsMeta">—</span>
+          </div>
+        </div>
+        <div class="takeoff-layout">
+          <aside class="sidebar">
+            <div class="sidebar-section conditions">
+              <div class="section-head">
+                <span>Conditions / Digitize</span>
+                <div class="actions">
+                  <button type="button" id="btnLoadSuite" title="Load painting suite (office / exterior / cabinets)">Suites</button>
+                  <button type="button" id="btnAddLinear" title="Add linear condition">+L</button>
+                  <button type="button" id="btnAddArea" title="Add area condition">+A</button>
+                  <button type="button" id="btnAddCount" title="Add count condition">+C</button>
+                  <button type="button" id="btnEditCond" title="Edit selected condition">✎</button>
+                </div>
+              </div>
+              <div class="section-body" id="conditionsList"></div>
+            </div>
+            <div class="sidebar-section pages">
+              <div class="section-head">
+                <span>Drawings / Pages</span>
+                <div class="actions">
+                  <button type="button" id="btnAddPage" class="menu-adv" title="Blank page">+</button>
+                </div>
+              </div>
+              <div class="section-body" id="pagesList"></div>
+            </div>
+            <div class="sidebar-section layers menu-adv-block">
+              <div class="section-head">
+                <span>Layers</span>
+                <div class="actions">
+                  <button type="button" id="btnAddLayer">+</button>
+                </div>
+              </div>
+              <div class="section-body" id="layersList"></div>
+            </div>
+          </aside>
+          <div class="canvas-area">
+            <div class="canvas-wrap">
+              <canvas id="planCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COVER SHEET -->
+      <section class="panel" id="panel-cover">
+        <div class="panel-title">Cover Sheet / Bid Information</div>
+        <div class="panel-sub">Project identity, contacts, and workflow — the information tab for the bid.</div>
+        <div class="form-grid" id="coverForm"></div>
+      </section>
+
+      <!-- SCOPE / AI — 2-step workflow: Sweep → Proposal -->
+      <section class="panel" id="panel-scope">
+        <div class="panel-title">Evidence sweep → logical WL Painting scope</div>
+        <div class="panel-sub">
+          <strong>Step 1</strong> reports only <em>real findings</em> grounded in your loaded sheets,
+          measured quantities, and notes (with reasons) — not generic checklists.
+          <strong>Step 2</strong> builds scope from <em>takeoff logic</em> first, then polishes into
+          WL Painting “Provide labor and materials…” format.
+        </div>
+
+        <div class="scope-workflow-bar">
+          <div class="scope-step" id="scopeStep1">
+            <span class="scope-step-num">1</span>
+            <div>
+              <strong>Plan-sweep</strong>
+              <div class="scope-step-desc">Checklist from sheets + notes + current takeoff</div>
+            </div>
+          </div>
+          <div class="scope-step-arrow">→</div>
+          <div class="scope-step" id="scopeStep2">
+            <span class="scope-step-num">2</span>
+            <div>
+              <strong>Proposal / Scope</strong>
+              <div class="scope-step-desc">WL Painting format from sweep + quantities</div>
+            </div>
+          </div>
+          <span class="chip" id="aiStatusChip" style="margin-left:auto">AI: checking…</span>
+        </div>
+
+        <div class="form-grid" style="max-width:1200px;padding-top:8px">
+          <div class="field full">
+            <label>Estimator notes (finish schedule, exclusions, site visit, GC instructions)</label>
+            <textarea id="scopeNotes" rows="3" placeholder="e.g. PT-1 walls eggshell, PT-2 ceilings flat, existing doors to remain, no exterior in base bid, regular hours only…"></textarea>
+          </div>
+        </div>
+
+        <div class="scope-split">
+          <div class="scope-col">
+            <div class="scope-col-head">
+              <div>
+                <strong>Step 1 — Plan-sweep</strong>
+                <span class="scope-col-meta" id="sweepMeta">Not run yet</span>
+              </div>
+              <div class="scope-col-actions">
+                <button type="button" class="primary" id="btnAiPlansweep">Run plan-sweep</button>
+                <button type="button" id="btnAiCopySweep" title="Copy sweep only">Copy</button>
+              </div>
+            </div>
+            <textarea id="sweepOutput" rows="20" placeholder="Plan-sweep checklist will appear here after Step 1…" style="font-family:var(--mono);font-size:12px;width:100%"></textarea>
+          </div>
+          <div class="scope-col">
+            <div class="scope-col-head">
+              <div>
+                <strong>Step 2 — WL Painting proposal</strong>
+                <span class="scope-col-meta" id="proposalMeta">Run after sweep</span>
+              </div>
+              <div class="scope-col-actions">
+                <button type="button" class="primary" id="btnAiScope" disabled title="Run plan-sweep first (or force with Ctrl+click)">Generate proposal</button>
+                <button type="button" id="btnAiCopy" title="Copy proposal only">Copy</button>
+              </div>
+            </div>
+            <textarea id="scopeOutput" rows="20" placeholder="Proposal / scope appears here after Step 2. Uses the full plan-sweep above + takeoff quantities." style="font-family:var(--mono);font-size:12px;width:100%"></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUMMARY -->
+      <section class="panel" id="panel-summary">
+        <div class="toolbar">
+          <div class="group">
+            <label class="small"><input type="checkbox" id="summaryHideZero" /> Hide zero quantities</label>
+          </div>
+          <div class="group">
+            <button type="button" id="btnExportSummaryCsv">Export CSV</button>
+          </div>
+        </div>
+        <div class="grid-wrap">
+          <table class="data-grid" id="summaryTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Condition</th>
+                <th>Style</th>
+                <th>Type</th>
+                <th>Layer</th>
+                <th class="num">Objects</th>
+                <th class="num">Primary Qty</th>
+                <th>Unit</th>
+                <th class="num">Secondary Qty</th>
+                <th>Unit</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ESTIMATE -->
+      <section class="panel" id="panel-estimate">
+        <div class="toolbar">
+          <div class="group">
+            <label class="small"><input type="checkbox" id="estimateHideZero" checked /> Hide zero takeoff quantities</label>
+          </div>
+          <div class="group">
+            <button type="button" id="btnExportEstimateCsv">Export CSV</button>
+            <button type="button" id="btnGotoWorksheet" title="Edit equipment & supplies">Edit gear (Worksheet)</button>
+          </div>
+        </div>
+        <div class="hint">
+          <strong>Full job cost:</strong> takeoff assemblies (primer, coats, spray systems) + worksheet gear/supplies
+          (mobilization, sprayers, barriers, PPE). Surface assemblies use wall SF (LF × height).
+        </div>
+        <div class="grid-wrap">
+          <table class="data-grid" id="estimateTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th class="num">Qty</th>
+                <th>Unit</th>
+                <th class="num">Mat $/U</th>
+                <th class="num">Labor $/U</th>
+                <th class="num">Equip $/U</th>
+                <th class="num">Other $/U</th>
+                <th class="num">Material $</th>
+                <th class="num">Labor $</th>
+                <th class="num">Equip $</th>
+                <th class="num">Other $</th>
+                <th class="num">Total $</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="totals-bar" id="estimateTotals"></div>
+      </section>
+
+      <!-- WORKSHEET -->
+      <section class="panel" id="panel-worksheet">
+        <div class="toolbar">
+          <div class="group">
+            <button type="button" class="primary" id="btnAddWorksheetLine">+ Line</button>
+            <button type="button" class="danger" id="btnDelWorksheetLine">Delete Line</button>
+          </div>
+        </div>
+        <div class="panel-sub">Manual estimate lines, allowances, and adjustments (classic Worksheet tab).</div>
+        <div class="grid-wrap">
+          <table class="data-grid" id="worksheetTable">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th class="num">Qty</th>
+                <th>Unit</th>
+                <th class="num">Material</th>
+                <th class="num">Labor</th>
+                <th class="num">Equipment</th>
+                <th class="num">Other</th>
+                <th class="num">Ext. Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="totals-bar" id="worksheetTotals"></div>
+      </section>
+
+      <!-- BUDGET (optional / hidden by default) -->
+      <section class="panel" id="panel-budget">
+        <div class="panel-title">Budget</div>
+        <div class="panel-sub">Optional tracking tab (hidden by default — enable via Show / Hide Tabs).</div>
+        <div class="form-grid" style="max-width:480px">
+          <div class="field">
+            <label>Total Budget</label>
+            <input type="number" id="budgetTotal" min="0" step="100" />
+          </div>
+          <div class="field">
+            <label>Contingency %</label>
+            <input type="number" id="budgetContingency" min="0" max="100" step="0.5" />
+          </div>
+          <div class="field full">
+            <label>Budget vs Estimate</label>
+            <div id="budgetCompare" class="chip">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTES (optional / hidden by default) -->
+      <section class="panel" id="panel-notes">
+        <div class="toolbar">
+          <button type="button" class="primary" id="btnAddNote">+ Note</button>
+        </div>
+        <div class="grid-wrap" id="notesList" style="padding:12px"></div>
+      </section>
+
+      <!-- RESOURCES -->
+      <section class="panel" id="panel-resources">
+        <div class="panel-title">Resources &amp; Workflow</div>
+        <div class="resources-grid">
+          <div class="card">
+            <h3>Typical workflow</h3>
+            <ol>
+              <li><strong>Projects</strong> — create / open a bid</li>
+              <li><strong>Cover Sheet</strong> — job info &amp; contacts</li>
+              <li><strong>Takeoff</strong> — load plan, set scale, conditions, layers, draw</li>
+              <li><strong>Summary</strong> — review quantities</li>
+              <li><strong>Estimate</strong> — apply unit costs</li>
+              <li><strong>Worksheet</strong> — allowances &amp; adjustments</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>Scale</h3>
+            <p>Pick a preset (e.g. ¼" = 1'-0") or <strong>Calibrate</strong>: click two points on a known dimension, then enter the real length in feet.</p>
+          </div>
+          <div class="card">
+            <h3>Conditions &amp; Layers</h3>
+            <p><strong>Conditions</strong> are measurable building objects (walls, floors, fixtures). Styles: Linear, Area, Count.</p>
+            <p style="margin-top:8px"><strong>Layers</strong> organize takeoff — toggle visibility like transparent sheets.</p>
+          </div>
+          <div class="card">
+            <h3>Hidden tabs</h3>
+            <p>Like classic OST, some tabs only appear when a bid is open. Budget and Notes are optional — use <em>Show / Hide Tabs</em> to reveal them.</p>
+          </div>
+          <div class="card">
+            <h3>Shortcuts</h3>
+            <ul>
+              <li>V / L / A / C / P — Select / Linear / Area / Count / Pan</li>
+              <li>1–9 — arm condition by number · Tab — next condition</li>
+              <li>Mouse wheel — zoom · middle / right-drag — pan when idle</li>
+              <li>Space or right-click — finish mark (or pan if not drawing)</li>
+              <li>Shift — ortho · Enter / double-click — finish · Esc — cancel</li>
+              <li>Delete — remove selected · Ctrl+Z / Ctrl+Y — undo / redo</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Estimates folders</h3>
+            <p>Launch with <strong>Launch PlanTakeoff.bat</strong> so the local server can read <code>Samuel Bids\Estimates YYYY</code> and create new EST folders (same as FOLDERS.bat).</p>
+          </div>
+          <div class="card">
+            <h3>About this app</h3>
+            <p>Standalone takeoff for WL Painting. Not mixed with WL Platform CRM. Separate from proprietary OST.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="status-bar" id="statusBar">
+      <span id="statusDate"></span>
+      <span class="sep">|</span>
+      <span id="statusPage">—</span>
+      <span class="sep">|</span>
+      <span id="statusDim">—</span>
+      <span class="sep">|</span>
+      <span id="statusScale" class="scale-badge" title="Plan scale status">Scale: —</span>
+      <span class="grow"></span>
+      <span id="statusZoom">100%</span>
+      <span class="sep">|</span>
+      <span>PlanTakeoff v1.0 · WL Painting</span>
+    </footer>
+  </div>
+
+  <!-- Condition editor modal -->
+  <div class="modal-backdrop" id="modalCondition">
+    <div class="modal">
+      <header>
+        <span>Condition Properties</span>
+        <button type="button" class="ghost" data-close="modalCondition">✕</button>
+      </header>
+      <div class="body">
+        <div class="row2">
+          <div class="field">
+            <label>Number</label>
+            <input type="number" id="condNumber" min="1" />
+          </div>
+          <div class="field">
+            <label>Style</label>
+            <select id="condStyle">
+              <option value="linear">Linear</option>
+              <option value="area">Area</option>
+              <option value="count">Count</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="condName" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Type</label>
+            <select id="condType"></select>
+          </div>
+          <div class="field">
+            <label>Layer</label>
+            <select id="condLayer"></select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Color</label>
+            <input type="color" id="condColor" />
+          </div>
+          <div class="field">
+            <label>Fill pattern</label>
+            <select id="condFillPattern">
+              <option value="solid">Solid fill</option>
+              <option value="transparent">Outline only</option>
+              <option value="hatch">Diagonal hatch</option>
+              <option value="crosshatch">Crosshatch</option>
+              <option value="diamond">Diamond</option>
+              <option value="dots">Dots</option>
+              <option value="lines-h">Horizontal lines</option>
+              <option value="lines-v">Vertical lines</option>
+            </select>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Fill opacity (0–1)</label>
+            <input type="number" id="condFillOpacity" min="0" max="1" step="0.05" value="0.22" />
+          </div>
+          <div class="field">
+            <label>Height (ft) — linear</label>
+            <input type="number" id="condHeight" step="0.1" min="0" />
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Thickness (ft) — area volume</label>
+            <input type="number" id="condThickness" step="0.01" min="0" />
+          </div>
+          <div class="field">
+            <label>Primary unit</label>
+            <input type="text" id="condUnit" placeholder="LF / SF / EA" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Notes</label>
+          <textarea id="condNotes"></textarea>
+        </div>
+        <div class="field full">
+          <label>Paint system assembly (one line per coat / component)</label>
+          <div id="condAssemblyList" style="display:flex;flex-direction:column;gap:6px"></div>
+          <button type="button" id="btnAddAssembly" style="margin-top:6px">+ Assembly line</button>
+          <p style="color:var(--text-dim);font-size:11px;margin:6px 0 0">
+            qty modes: same (primary qty), surface (LF×height), length, count, fixed. Factor = coats (e.g. 2).
+          </p>
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" data-close="modalCondition">Cancel</button>
+        <button type="button" class="primary" id="btnSaveCondition">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Room package setup -->
+  <div class="modal-backdrop" id="modalRoom">
+    <div class="modal" style="width:min(520px,94vw)">
+      <header>
+        <span>Room package (1-outline → full paint takeoff)</span>
+        <button type="button" class="ghost" data-close="modalRoom">✕</button>
+      </header>
+      <div class="body">
+        <p style="color:var(--text-dim);margin:0 0 10px;font-size:12px">
+          Trace the room floor outline once. PlanTakeoff creates ceiling SF, wall SF (perimeter × height),
+          base/crown/chair rail LF, optional wainscot — with typical multiplier.
+        </p>
+        <div class="field">
+          <label>Room name</label>
+          <input type="text" id="roomName" placeholder="Conference 201" />
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Wall height (ft)</label>
+            <input type="number" id="roomWallHeight" min="6" max="30" step="0.1" value="9" />
+          </div>
+          <div class="field">
+            <label>× Typical units</label>
+            <input type="number" id="roomMultiplier" min="1" step="1" value="1" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Include</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px">
+            <label><input type="checkbox" id="roomCeil" checked /> Ceiling</label>
+            <label><input type="checkbox" id="roomWalls" checked /> Walls</label>
+            <label><input type="checkbox" id="roomBase" checked /> Base / shoe</label>
+            <label><input type="checkbox" id="roomCrown" /> Crown</label>
+            <label><input type="checkbox" id="roomChair" /> Chair rail</label>
+            <label><input type="checkbox" id="roomWainscot" /> Wainscot</label>
+            <label><input type="checkbox" id="roomFloor" /> Floor paint</label>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Wainscot height (ft)</label>
+            <input type="number" id="roomWainscotH" min="1" max="8" step="0.1" value="3.5" />
+          </div>
+          <div class="field">
+            <label></label>
+            <p style="color:var(--text-dim);font-size:11px;margin:0">After create: select wall → Deduct tool for doors/windows.</p>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" data-close="modalRoom">Cancel</button>
+        <button type="button" class="primary" id="btnRoomStart">Trace room on plan</button>
+        <button type="button" id="btnRoomFromSelection">Apply to selected area</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calibrate modal -->
+  <div class="modal-backdrop" id="modalCalibrate">
+    <div class="modal">
+      <header>
+        <span>Set scale from known dimension</span>
+        <button type="button" class="ghost" data-close="modalCalibrate">✕</button>
+      </header>
+      <div class="body">
+        <p style="color:var(--text-dim);margin:0 0 8px">
+          Measured <strong id="calPx">0</strong> px on the plan
+          <span id="calCurrentReadout" style="display:block;margin-top:4px"></span>
+        </p>
+        <p style="color:var(--text-dim);margin:0 0 12px;font-size:12px">
+          Enter the length printed on the drawing (e.g. the dimension string <strong>4'-6"</strong>).
+          This fixes all quantities on this page.
+        </p>
+        <div class="field">
+          <label>Known length</label>
+          <input type="text" id="calFeet" inputmode="decimal" placeholder="4'6&quot;  or  4.5  or  20" autofocus />
+        </div>
+        <div class="field">
+          <label>Quick pick</label>
+          <div id="calQuickPicks" style="display:flex;flex-wrap:wrap;gap:6px">
+            <button type="button" class="btn-sm cal-quick" data-len="4">4'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="4.5">4'-6"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="5">5'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="8">8'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="10">10'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="12">12'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="20">20'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="50">50'-0"</button>
+            <button type="button" class="btn-sm cal-quick" data-len="100">100'-0"</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Extra inches (optional, if length is plain feet number)</label>
+          <input type="number" id="calInches" min="0" step="0.1" placeholder="e.g. 6 for 4 ft + 6 in" />
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" data-close="modalCalibrate">Cancel</button>
+        <button type="button" class="primary" id="btnApplyCalibrate">Apply scale &amp; update quantities</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs visibility modal -->
+  <div class="modal-backdrop" id="modalTabs">
+    <div class="modal">
+      <header>
+        <span>Show / Hide Optional Tabs</span>
+        <button type="button" class="ghost" data-close="modalTabs">✕</button>
+      </header>
+      <div class="body">
+        <p style="color:var(--text-dim);margin:0 0 12px">
+          Core tabs (Projects, Takeoff, Summary, Estimate, Resources) stay available when a bid is open.
+          Optional tabs mirror classic “hidden” estimating views.
+        </p>
+        <label class="list-item"><input type="checkbox" data-opt-tab="cover" /> Cover Sheet</label>
+        <label class="list-item"><input type="checkbox" data-opt-tab="worksheet" /> Worksheet</label>
+        <label class="list-item"><input type="checkbox" data-opt-tab="budget" /> Budget</label>
+        <label class="list-item"><input type="checkbox" data-opt-tab="notes" /> Notes</label>
+      </div>
+      <div class="footer">
+        <button type="button" class="primary" data-close="modalTabs">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileJson" accept="application/json,.json" hidden />
+
+  <!-- Files browser modal -->
+  <div class="modal-backdrop" id="modalFiles">
+    <div class="modal" style="width:min(640px,94vw)">
+      <header>
+        <span id="modalFilesTitle">Project files</span>
+        <button type="button" class="ghost" data-close="modalFiles">✕</button>
+      </header>
+      <div class="body" id="modalFilesBody"></div>
+      <div class="footer">
+        <button type="button" data-close="modalFiles">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painting suites modal -->
+  <div class="modal-backdrop" id="modalSuites">
+    <div class="modal" style="width:min(720px,96vw)">
+      <header>
+        <span>WL Painting — job suites</span>
+        <button type="button" class="ghost" data-close="modalSuites">✕</button>
+      </header>
+      <div class="body">
+        <p style="color:var(--text-dim);margin:0 0 12px;font-size:12px;line-height:1.45">
+          Pre-loaded contractor kits: conditions, paint systems (primer + coats), equipment &amp; supplies on the Worksheet,
+          and scope notes for AI. Pick the suite that matches the bid, then digitize.
+        </p>
+        <div id="suiteCards" class="suite-cards"></div>
+        <div class="field" style="margin-top:12px">
+          <label><input type="radio" name="suiteMode" value="replace" checked /> Replace current conditions / worksheet</label>
+          <label style="margin-left:14px"><input type="radio" name="suiteMode" value="merge" /> Merge (append to existing)</label>
+        </div>
+      </div>
+      <div class="footer">
+        <button type="button" data-close="modalSuites">Cancel</button>
+        <button type="button" class="primary" id="btnApplySuite" disabled>Apply suite</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/models.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/canvas-engine.js"></script>
+  <script src="js/estimates.js"></script>
+  <script src="js/pdf-loader.js"></script>
+  <script src="js/scope-logic.js"></script>
+  <script src="js/painting-suites.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

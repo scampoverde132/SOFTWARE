@@ -1,0 +1,31 @@
+Project: EST2604009 - SUNRISE PHASE #3
+Job #: EST2604009
+Client: 
+Location: 
+
+DRAWING / SHEET NAMES (5 listed):
+- SE3 — Mt
+- SE3 · p2
+- SE3 · p3
+- SE3 · p4
+- SE3 · p5
+
+CURRENT TAKEOFF (if any):
+- PT-1 Walls: 0 LF
+- Ceilings: 0 SF
+- Doors: 0 EA
+- Base / Trim: 0 LF
+
+PLAN TEXT EXTRACT (may be empty):
+(none)
+
+NOTES FROM ESTIMATOR:
+(none)
+
+START YOUR REPLY WITH EXACTLY:
+## Painting plan-sweep checklist
+
+Then groups with "- [ ]" items for: General, Interior, Exterior, Doors & frames, Specialty, Wallcovering, Site.
+Then ## Likely finish systems
+Then ## Missing sheets / RFI questions
+Then ## Suggested takeoff conditions
