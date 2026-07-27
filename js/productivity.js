@@ -17,7 +17,6 @@
     exterior: { label: 'Exterior', style: 'area', name: 'Exterior', type: 'Exterior Improvements', coverageRate: 350, estimateQtyMode: 'primary', materialRateMode: 'perGallon', color: '#16a085' },
   };
 
-  // Material: $/gal except doors ($/EA). Labor/Sub: $ per estimate quantity unit.
   const DEFAULT_RATES = {
     walls: { material: 45, labor: 0.85, sub: 0, coverageRate: 350 },
     ceilings: { material: 40, labor: 0.70, sub: 0, coverageRate: 300 },
@@ -48,7 +47,6 @@
     const S = window.PTStore;
     if (!S || S.__paintProductivityCapture) return !!S;
     S.__paintProductivityCapture = true;
-
     if (typeof S.defaultAppState === 'function') {
       const original = S.defaultAppState;
       S.defaultAppState = function (...args) {
@@ -157,7 +155,6 @@
     const coverageRate = Math.max(1, Number(condition.coverageRate) || defaultCoverage(condition));
     let squareFeet = 0;
     let gallons = 0;
-
     for (const t of project?.takeoffs || []) {
       if (t.conditionId !== condition.id) continue;
       if (t.parentId && (t.isDeduct || t.isDeduction)) continue;
@@ -195,7 +192,7 @@
     return condition;
   }
 
-  function conditionLines(project, hideZero) {
+  function conditionLines(project, hideZero, legacyRows = []) {
     const M = window.PTModels;
     normalizeProject(project);
     const rows = [];
@@ -203,12 +200,22 @@
       const q = M.aggregateConditionQuantities(project, c.id);
       const estimate = estimateQty(c, q);
       const paint = paintMetrics(project, c);
+      const legacyForCondition = legacyRows.filter((row) => row.conditionId === c.id);
+      const preserveLegacyAssembly = c.materialRateMode === 'legacyPerUnit' && legacyForCondition.length > 0;
       const matRate = Number(c.materialUnitCost) || 0;
       const labRate = Number(c.laborUnitCost) || 0;
       const subRate = Number(c.subUnitCost) || 0;
-      const material = c.materialRateMode === 'perGallon' ? paint.gallons * matRate : estimate.qty * matRate;
-      const labor = estimate.qty * labRate;
-      const sub = estimate.qty * subRate;
+      const material = preserveLegacyAssembly
+        ? legacyForCondition.reduce((sum, row) => sum + (Number(row.material) || 0), 0)
+        : c.materialRateMode === 'perGallon'
+          ? paint.gallons * matRate
+          : estimate.qty * matRate;
+      const labor = preserveLegacyAssembly
+        ? legacyForCondition.reduce((sum, row) => sum + (Number(row.labor) || 0), 0)
+        : estimate.qty * labRate;
+      const sub = preserveLegacyAssembly
+        ? legacyForCondition.reduce((sum, row) => sum + (Number(row.sub) || 0), 0)
+        : estimate.qty * subRate;
       const row = {
         section: 'takeoff', conditionId: c.id, number: c.number, name: c.name,
         qty: estimate.qty, unit: estimate.unit, gallons: paint.gallons,
@@ -217,6 +224,7 @@
         equipmentUnitCost: 0, otherUnitCost: 0,
         material, labor, sub, equipment: 0, other: 0, total: material + labor + sub,
         isAssembly: false, qtyMode: c.estimateQtyMode || 'primary', rateKey: c.rateKey,
+        legacyAssemblyPreserved: preserveLegacyAssembly,
       };
       if (!hideZero || Math.abs(row.qty) > 1e-9 || Math.abs(row.total) > 1e-9) rows.push(row);
     }
@@ -254,7 +262,6 @@
     M.conditionPaintMetrics = paintMetrics;
     M.computePaintGallons = (project, condition) => paintMetrics(project, condition).gallons;
     M.applyDefaultPaintingRate = applyRate;
-
     if (M.createProject) {
       const original = M.createProject;
       M.createProject = function (overrides = {}) {
@@ -281,7 +288,7 @@
       M.buildFullEstimate = function (project, opts = {}) {
         normalizeProject(project);
         const legacy = original(project, opts);
-        const takeoffLines = conditionLines(project, !!opts.hideZero);
+        const takeoffLines = conditionLines(project, !!opts.hideZero, legacy.takeoffLines || []);
         const gearLines = legacy.gearLines || [];
         return { takeoffLines, gearLines, ...rollup(takeoffLines, gearLines) };
       };
@@ -358,11 +365,11 @@
     });
     applyRate(project, c);
     project.conditions.push(c);
-
     if (activeCanvas?.onChange) {
       activeCanvas.onChange({ type: 'selection', ids: [], conditionId: c.id });
       const tool = c.style === 'area' ? 'area' : c.style === 'count' ? 'count' : 'linear';
-      activeCanvas.onToolRequest?.(tool) || activeCanvas.setTool?.(tool);
+      if (activeCanvas.onToolRequest) activeCanvas.onToolRequest(tool);
+      else activeCanvas.setTool?.(tool);
       activeCanvas.onChange({ type: 'status-msg', message: `${t.label} created · ${c.coverageRate} SF/gal · ready to measure` });
     } else {
       project.activeConditionId = c.id;
@@ -388,7 +395,6 @@
     const bar = document.getElementById('markPropsBar');
     const row = bar?.querySelector('.mark-props-row:last-of-type') || bar?.querySelector('.mark-props-row');
     if (!row) return false;
-
     if (!document.getElementById('markWastePct')) {
       const label = document.createElement('label');
       label.className = 'small';
@@ -404,7 +410,6 @@
       row.insertBefore(label, row.firstChild);
       label.querySelector('input').addEventListener('change', (e) => setCoverage(e.target.value));
     }
-
     const canvas = document.getElementById('planCanvas');
     if (canvas && !canvas.dataset.paintProductivitySync) {
       canvas.dataset.paintProductivitySync = '1';
@@ -418,7 +423,6 @@
     const coverage = document.getElementById('conditionCoverageRate');
     const selected = selectedTakeoffs();
     const condition = selectedCondition();
-
     if (waste) {
       waste.disabled = !selected.length;
       const values = selected.map((t) => t.wastePct == null || t.wastePct === '' ? null : Number(t.wastePct));
@@ -463,13 +467,11 @@
     const table = document.getElementById('estimateTable');
     const toolbar = document.querySelector('#panel-estimate .toolbar');
     if (!table || !toolbar) return false;
-
     const header = table.querySelector('thead tr');
     if (header && !header.dataset.paintProductivity) {
       header.dataset.paintProductivity = '1';
       header.innerHTML = '<th>Condition</th><th class="num">Qty</th><th>Unit</th><th class="num">Gallons</th><th class="num">Material $</th><th class="num">Labor $</th><th class="num">Sub $</th><th class="num">Total</th>';
     }
-
     if (!document.getElementById('paintingProductivityControls')) {
       const group = document.createElement('div');
       group.className = 'group';
@@ -483,13 +485,11 @@
       group.querySelector('#paintingGlobalWaste').addEventListener('change', setGlobalWaste);
       group.querySelector('#btnRefreshScaleQty').addEventListener('click', refreshScaleQuantities);
     }
-
     const tbody = table.querySelector('tbody');
     if (tbody && !observer) {
       observer = new MutationObserver(queueRender);
       observer.observe(tbody, { childList: true });
     }
-
     const exportBtn = document.getElementById('btnExportEstimateCsv');
     if (exportBtn && !exportBtn.dataset.paintProductivity) {
       exportBtn.dataset.paintProductivity = '1';
@@ -548,7 +548,6 @@
     const totalsBar = document.getElementById('estimateTotals');
     const project = currentProject();
     if (!tbody || !totalsBar) return;
-
     rendering = true;
     observer?.disconnect();
     try {
@@ -561,7 +560,6 @@
       const globalWaste = document.getElementById('paintingGlobalWaste');
       if (globalWaste && document.activeElement !== globalWaste) globalWaste.value = String(settings(project).wastePct);
       const full = window.PTModels.buildFullEstimate(project, { hideZero: document.getElementById('estimateHideZero')?.checked });
-
       const section = (title, detail) => {
         const tr = document.createElement('tr');
         tr.className = 'est-section-row';
@@ -571,19 +569,16 @@
       const line = (r, gear = false) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `<td>${esc(r.name || 'Line')}</td><td class="num">${window.PTModels.formatQty(r.qty, 2)}</td><td>${esc(r.unit || '')}</td><td class="num">${gear ? '—' : window.PTModels.formatQty(r.gallons || 0, 2)}</td><td class="num">${money(r.material)}</td><td class="num">${money(r.labor)}</td><td class="num">${money(r.sub || 0)}</td><td class="num"><strong>${money(r.total)}</strong></td>`;
-        if (!gear) tr.title = `${window.PTModels.formatQty(r.paintSf || 0, 1)} SF paint area · ${window.PTModels.formatQty(r.coverageRate || 0, 0)} SF/gal`;
+        if (!gear) tr.title = `${window.PTModels.formatQty(r.paintSf || 0, 1)} SF paint area · ${window.PTModels.formatQty(r.coverageRate || 0, 0)} SF/gal${r.legacyAssemblyPreserved ? ' · existing assembly costs preserved' : ''}`;
         tbody.appendChild(tr);
       };
-
       section('A. Painting takeoff', `${full.takeoffLines.length} condition(s) · gallons include waste`);
       if (full.takeoffLines.length) full.takeoffLines.forEach((r) => line(r));
       else tbody.insertAdjacentHTML('beforeend', '<tr><td colspan="8" style="color:var(--text-dim)">No measured painting quantities yet.</td></tr>');
-
       if (full.gearLines.length) {
         section('B. Equipment, supplies & mobilization', `${full.gearLines.length} worksheet line(s)`);
         full.gearLines.forEach((r) => line(r, true));
       }
-
       const T = full.totals || {};
       tbody.insertAdjacentHTML('beforeend', `<tr class="est-total-row"><td colspan="4"><strong>Totals</strong></td><td class="num"><strong>${money(T.material)}</strong></td><td class="num"><strong>${money(T.labor)}</strong></td><td class="num"><strong>${money(T.sub)}</strong></td><td class="num"><strong>${money(T.grand)}</strong></td></tr>`);
       const gallons = full.takeoffLines.reduce((s, r) => s + (Number(r.gallons) || 0), 0);
