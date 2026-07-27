@@ -13,6 +13,7 @@
   let touchBusy = false;
   let touchQueued = null;
   let installed = false;
+  let estimatesInstalled = false;
   let lastErrorKey = '';
   let lastErrorAt = 0;
   let closeBackupSent = false;
@@ -210,6 +211,21 @@
     return true;
   }
 
+  function installEstimateBoundary() {
+    const E = window.PTEstimates;
+    if (!E || estimatesInstalled || typeof E.updateJob !== 'function') return !!E;
+    estimatesInstalled = true;
+    const originalUpdateJob = E.updateJob;
+    E.updateJob = async function updateJobWithFreshTakeoff(path, updates = {}) {
+      if (updates.status) {
+        const current = findProject(appState, appState?.activeProjectId);
+        if (current && projectPath(current) === path) await syncTakeoff(current, true);
+      }
+      return originalUpdateJob.call(this, path, updates);
+    };
+    return true;
+  }
+
   function pageCloseBackup() {
     if (closeBackupSent) return;
     closeBackupSent = true;
@@ -255,15 +271,18 @@
   installErrorBoundary();
   installLifecycleHooks();
   installStoreBoundary();
+  installEstimateBoundary();
   document.addEventListener('DOMContentLoaded', () => {
     installErrorBoundary();
     installLifecycleHooks();
     installStoreBoundary();
+    installEstimateBoundary();
     let tries = 0;
     const timer = setInterval(() => {
       installStoreBoundary();
+      installEstimateBoundary();
       tries += 1;
-      if (installed || tries > 100) clearInterval(timer);
+      if ((installed && estimatesInstalled) || tries > 100) clearInterval(timer);
     }, 100);
   });
 })();
