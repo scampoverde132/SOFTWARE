@@ -26,6 +26,7 @@ a = Analysis(
         "server",
         "job_server",
         "daily_log_server",
+        "client_update_server",
         "webview",
         "webview.platforms.edgechromium",
         "clr",
