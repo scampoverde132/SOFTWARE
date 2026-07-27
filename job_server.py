@@ -2,11 +2,12 @@
 """Additive disk-backed Job model for PlanTakeoff EST folders.
 
 Installed into the existing ``server`` module by ``desktop_app.py``. The patch
-wraps scan/create behavior and adds ``POST /api/job/update`` without changing
-any existing folder, PDF, takeoff, or AI endpoints.
+wraps scan/create behavior and adds disk-backed job update/finalize endpoints
+without changing existing folder, PDF, takeoff, or AI endpoints.
 """
 from __future__ import annotations
 
+import copy
 import json
 import os
 import uuid
@@ -16,6 +17,7 @@ from typing import Any, Dict
 from urllib.parse import urlparse
 
 JOB_FILE = "job.json"
+SNAPSHOT_FILE = "takeoff-snapshot.json"
 ALLOWED_STATUSES = (
     "Lead",
     "Estimating",
@@ -46,6 +48,16 @@ def _folder_created(folder: Path) -> str:
         return _now()
 
 
+def _parse_folder_name(name: str):
+    # Mirrors server.parse_folder_name but keeps this module independently testable.
+    import re
+
+    match = re.match(r"^(EST\d+)\s*[-–]\s*(.+)$", (name or "").strip(), re.I)
+    if match:
+        return match.group(1).upper(), match.group(2).strip()
+    return name, name
+
+
 def default_job(folder: Path, *, status: str = "Lead") -> Dict[str, Any]:
     bid_ref, project_name = _parse_folder_name(folder.name)
     return {
@@ -60,17 +72,10 @@ def default_job(folder: Path, *, status: str = "Lead") -> Dict[str, Any]:
         "address": "",
         "estimatedTotal": 0.0,
         "actualTotal": 0.0,
+        "baselineEstimate": None,
+        "actualBudget": None,
+        "baselineLocked": False,
     }
-
-
-def _parse_folder_name(name: str):
-    # Mirrors server.parse_folder_name but keeps this module independently testable.
-    import re
-
-    match = re.match(r"^(EST\d+)\s*[-–]\s*(.+)$", (name or "").strip(), re.I)
-    if match:
-        return match.group(1).upper(), match.group(2).strip()
-    return name, name
 
 
 def normalize_job(folder: Path, data: Any = None, *, default_status: str = "Lead") -> Dict[str, Any]:
@@ -91,16 +96,23 @@ def normalize_job(folder: Path, data: Any = None, *, default_status: str = "Lead
     job["address"] = str(source.get("address") or "")
     job["estimatedTotal"] = _number(source.get("estimatedTotal"))
     job["actualTotal"] = _number(source.get("actualTotal"))
+    job["baselineEstimate"] = source.get("baselineEstimate") if isinstance(source.get("baselineEstimate"), dict) else None
+    job["actualBudget"] = source.get("actualBudget") if isinstance(source.get("actualBudget"), dict) else None
+    job["baselineLocked"] = bool(source.get("baselineLocked", False))
     return job
+
+
+def _write_json_atomic(target: Path, data: Dict[str, Any]) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temp = target.parent / f".{target.name}.{os.getpid()}.tmp"
+    payload = json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+    temp.write_text(payload, encoding="utf-8")
+    temp.replace(target)
 
 
 def write_job(folder: Path, job: Dict[str, Any]) -> Dict[str, Any]:
     folder.mkdir(parents=True, exist_ok=True)
-    target = folder / JOB_FILE
-    temp = folder / f".{JOB_FILE}.{os.getpid()}.tmp"
-    payload = json.dumps(job, indent=2, ensure_ascii=False) + "\n"
-    temp.write_text(payload, encoding="utf-8")
-    temp.replace(target)
+    _write_json_atomic(folder / JOB_FILE, job)
     return job
 
 
@@ -120,15 +132,28 @@ def read_or_create_job(folder: Path, *, default_status: str = "Lead") -> Dict[st
     return job
 
 
-def update_job(server_module, payload: Dict[str, Any]) -> Dict[str, Any]:
+def _validated_folder(server_module, payload: Dict[str, Any]) -> Path:
     folder_value = str(payload.get("path") or payload.get("folder_path") or "").strip()
     if not folder_value:
         raise ValueError("Job folder path is required")
     folder = Path(folder_value)
     if not folder.is_dir() or not server_module.is_allowed(folder):
         raise ValueError("Job folder not found or not allowed")
+    return folder
 
+
+def _baseline_total(baseline: Any) -> float:
+    if not isinstance(baseline, dict):
+        return 0.0
+    totals = baseline.get("totals") if isinstance(baseline.get("totals"), dict) else {}
+    return _number(totals.get("grand") or totals.get("total") or baseline.get("estimatedTotal"))
+
+
+def update_job(server_module, payload: Dict[str, Any]) -> Dict[str, Any]:
+    folder = _validated_folder(server_module, payload)
     job = read_or_create_job(folder)
+    previous_status = job.get("status")
+
     if "status" in payload:
         status = str(payload.get("status") or "")
         if status not in ALLOWED_STATUSES:
@@ -137,16 +162,73 @@ def update_job(server_module, payload: Dict[str, Any]) -> Dict[str, Any]:
     if "notes" in payload:
         job["notes"] = str(payload.get("notes") or "")
 
-    # These fields are part of the Job contract and may be updated by future UI.
     for field in ("clientName", "address"):
         if field in payload:
             job[field] = str(payload.get(field) or "")
     for field in ("estimatedTotal", "actualTotal"):
         if field in payload:
             job[field] = _number(payload.get(field))
+    for field in ("baselineEstimate", "actualBudget"):
+        if field in payload:
+            value = payload.get(field)
+            job[field] = copy.deepcopy(value) if isinstance(value, dict) else None
+
+    # Awarding a finalized bid establishes the production budget from its locked baseline.
+    if job.get("status") == "Awarded" and previous_status != "Awarded":
+        baseline = job.get("baselineEstimate")
+        if isinstance(baseline, dict):
+            job["actualBudget"] = copy.deepcopy(baseline)
+            job["actualTotal"] = _baseline_total(baseline)
+            job["actualBudgetCreated"] = _now()
+
+    if job.get("status") == "Estimating":
+        job["baselineLocked"] = False
+        job["reopenedForMeasuring"] = _now()
+    elif isinstance(job.get("baselineEstimate"), dict):
+        job["baselineLocked"] = True
 
     job["updated"] = _now()
     return write_job(folder, normalize_job(folder, job))
+
+
+def finalize_job(server_module, payload: Dict[str, Any]) -> Dict[str, Any]:
+    folder = _validated_folder(server_module, payload)
+    baseline = payload.get("baselineEstimate")
+    snapshot = payload.get("takeoffSnapshot")
+    if not isinstance(baseline, dict):
+        raise ValueError("baselineEstimate is required")
+    if not isinstance(snapshot, dict):
+        raise ValueError("takeoffSnapshot is required")
+
+    finalized_at = _now()
+    baseline = copy.deepcopy(baseline)
+    baseline["finalizedAt"] = finalized_at
+    snapshot = copy.deepcopy(snapshot)
+    snapshot["createdAt"] = finalized_at
+    snapshot["baselineEstimate"] = baseline
+
+    job = read_or_create_job(folder)
+    job["baselineEstimate"] = baseline
+    job["estimatedTotal"] = _baseline_total(baseline)
+    job["status"] = "Bid Sent"
+    job["baselineLocked"] = True
+    job["baselineFinalizedAt"] = finalized_at
+    job["updated"] = finalized_at
+    job = write_job(folder, normalize_job(folder, job))
+
+    # Stable current snapshot plus a timestamped archive for audit/history.
+    current_target = folder / SNAPSHOT_FILE
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    archive_target = folder / f"takeoff-snapshot-{stamp}.json"
+    _write_json_atomic(current_target, snapshot)
+    _write_json_atomic(archive_target, snapshot)
+
+    return {
+        "job": job,
+        "snapshot": str(current_target),
+        "archiveSnapshot": str(archive_target),
+        "finalizedAt": finalized_at,
+    }
 
 
 def install(server_module) -> None:
@@ -157,6 +239,7 @@ def install(server_module) -> None:
     server_module.JOB_STATUSES = ALLOWED_STATUSES
     server_module.read_or_create_job = read_or_create_job
     server_module.update_job = lambda payload: update_job(server_module, payload)
+    server_module.finalize_job = lambda payload: finalize_job(server_module, payload)
 
     original_scan_project = server_module.scan_project
 
@@ -184,10 +267,14 @@ def install(server_module) -> None:
     original_post = server_module.Handler.do_POST
 
     def do_post_with_job(self):
-        if urlparse(self.path).path != "/api/job/update":
+        api_path = urlparse(self.path).path
+        if api_path not in ("/api/job/update", "/api/job/finalize"):
             return original_post(self)
         try:
             body = self._read_json()
+            if api_path == "/api/job/finalize":
+                result = finalize_job(server_module, body)
+                return self._send_json({"ok": True, **result})
             job = update_job(server_module, body)
             return self._send_json({"ok": True, "job": job})
         except ValueError as exc:
