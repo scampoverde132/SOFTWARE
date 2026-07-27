@@ -23,9 +23,10 @@ taskkill /IM "WL PT TOOL.exe" /F >nul 2>&1
 del /Q "%DESKTOP_LINK%" >nul 2>&1
 del /Q "%START_LINK%" >nul 2>&1
 
-if exist "%DEST%" (
-  rmdir /S /Q "%DEST%"
-)
+REM Leave the program directory before deleting it, including when this copy
+REM of the uninstaller was launched from the installed application folder.
+cd /d "%TEMP%"
+if exist "%DEST%" rmdir /S /Q "%DEST%"
 
 if exist "%DEST%" (
   echo.
