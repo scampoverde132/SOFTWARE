@@ -53,9 +53,11 @@ def start_server(root: Path, port: int):
     # Configure server module before import side-effects
     import server as srv
     import job_server
+    import daily_log_server
 
-    # Additive patch: disk-backed job.json metadata + /api/job/update.
+    # Additive patches: disk-backed job workflow, then daily job-site logs.
     job_server.install(srv)
+    daily_log_server.install(srv)
 
     srv.APP_DIR = root
     srv.PORT = port
