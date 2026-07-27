@@ -1,0 +1,41 @@
+name: Build WL PT TOOL Windows
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - agent/pro-measuring-p0
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Build and self-test Windows package
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Build, verify and package WL PT TOOL
+        shell: cmd
+        run: build_wl_pt_tool.bat --ci
+
+      - name: Upload install-ready package
+        uses: actions/upload-artifact@v4
+        with:
+          name: WL-PT-TOOL-Windows
+          path: release/WL-PT-TOOL-Windows
+          if-no-files-found: error
+          retention-days: 30
