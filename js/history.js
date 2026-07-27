@@ -26,6 +26,16 @@
     return { ...clone(entry), type };
   }
 
+  // app.js currently applies legacy add/delete names. Keep the stack's public
+  // command model professional while returning compatible entries to the app.
+  function forApp(entry) {
+    if (!entry) return null;
+    const copy = clone(entry);
+    if (copy.type === 'addTakeoff') copy.type = 'add';
+    if (copy.type === 'deleteTakeoff') copy.type = 'delete';
+    return copy;
+  }
+
   function clear() {
     undo = [];
     redo = [];
@@ -61,7 +71,7 @@
     const entry = undo.pop();
     if (!entry) return null;
     redo.push(entry);
-    return clone(entry);
+    return forApp(entry);
   }
 
   function redoOnce() {
@@ -69,7 +79,7 @@
     if (!entry) return null;
     undo.push(entry);
     if (undo.length > CAP) undo.splice(0, undo.length - CAP);
-    return clone(entry);
+    return forApp(entry);
   }
 
   window.PTHistory = {
