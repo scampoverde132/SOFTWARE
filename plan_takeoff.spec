@@ -11,11 +11,10 @@ datas = [
     (str(ROOT / "js"), "js"),
     (str(ROOT / "vendor"), "vendor"),
     (str(ROOT / "extensions"), "extensions"),
-    # js/ includes scope-logic.js via folder copy
     (str(ROOT / "server.py"), "."),
     (str(ROOT / "README.md"), "."),
 ]
-# All js/*.js under js/ are included via the js folder above (incl. history.js).
+# All js/*.js under js/ are included via the js folder above.
 
 a = Analysis(
     [str(ROOT / "desktop_app.py")],
@@ -27,6 +26,7 @@ a = Analysis(
         "job_server",
         "daily_log_server",
         "client_update_server",
+        "suite_server",
         "webview",
         "webview.platforms.edgechromium",
         "clr",
@@ -50,7 +50,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=False,  # windowed app — no black console
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
