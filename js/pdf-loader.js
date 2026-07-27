@@ -9,5 +9,6 @@
   document.write('<script src="js/productivity.js"><\/script>');
   document.write('<script src="js/finalization.js"><\/script>');
   document.write('<script src="js/change-order.js"><\/script>');
+  document.write('<script src="js/change-order-disk.js"><\/script>');
   document.write('<script src="js/pdf-loader-core.js"><\/script>');
 })();
