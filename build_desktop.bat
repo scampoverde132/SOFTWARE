@@ -7,7 +7,7 @@ set "PY=py -3"
 where py >nul 2>&1 || set "PY=python"
 set "EXE=%~dp0dist\PlanTakeoff\PlanTakeoff.exe"
 set "INTERNAL=%~dp0dist\PlanTakeoff\_internal"
-set "REQUIRED_JS=job-model.js command-center.js productivity.js finalization.js change-order.js change-order-disk.js daily-logs.js daily-logs-local-date.js settings.js hardening.js client-updates.js pdf-loader-core.js pdf-loader.js app.js"
+set "REQUIRED_JS=job-model.js command-center.js productivity.js finalization.js change-order.js change-order-disk.js daily-logs.js daily-logs-local-date.js settings.js settings-model-defaults.js hardening.js client-updates.js pdf-loader-core.js pdf-loader.js app.js"
 
 echo ============================================
 echo   Building PlanTakeoff hybrid desktop suite
