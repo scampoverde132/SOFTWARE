@@ -136,7 +136,10 @@
       installStatusFilter();
       const wantedStatus = document.getElementById('libraryStatusFilter')?.value || '';
       const list = (projects || [])
-        .map((project) => ({ ...project, job: normalizeJob(project.job, project) }))
+        .map((project) => {
+          project.job = normalizeJob(project.job, project);
+          return project;
+        })
         .filter((project) => !wantedStatus || project.job.status === wantedStatus);
 
       if (!list.length) {
@@ -207,6 +210,9 @@
             const cell = row.children[2];
             if (cell) cell.innerHTML = badge(project.job.status);
             row.title = project.job.notes || 'Click to open takeoff';
+            if (wantedStatus && project.job.status !== wantedStatus) {
+              document.getElementById('libraryFilter')?.dispatchEvent(new Event('input', { bubbles: true }));
+            }
           } catch (error) {
             event.target.value = previous;
             alert(`Status update failed: ${error.message || error}`);
