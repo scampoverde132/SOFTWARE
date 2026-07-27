@@ -1,6 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-# PyInstaller spec for PlanTakeoff desktop
-import sys
+# Side-by-side PyInstaller spec for WL PT TOOL.
 from pathlib import Path
 
 ROOT = Path(SPECPATH)
@@ -13,11 +12,11 @@ datas = [
     (str(ROOT / "extensions"), "extensions"),
     (str(ROOT / "server.py"), "."),
     (str(ROOT / "README.md"), "."),
+    (str(ROOT / "WL-PT-TOOL-INSTALL.txt"), "."),
 ]
-# All js/*.js under js/ are included via the js folder above.
 
 a = Analysis(
-    [str(ROOT / "desktop_app.py")],
+    [str(ROOT / "wl_pt_tool_app.py")],
     pathex=[str(ROOT)],
     binaries=[],
     datas=datas,
@@ -27,6 +26,7 @@ a = Analysis(
         "daily_log_server",
         "client_update_server",
         "suite_server",
+        "wl_identity_server",
         "webview",
         "webview.platforms.edgechromium",
         "clr",
@@ -45,7 +45,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name="PlanTakeoff",
+    name="WL PT TOOL",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -66,5 +66,5 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name="PlanTakeoff",
+    name="WL PT TOOL",
 )
