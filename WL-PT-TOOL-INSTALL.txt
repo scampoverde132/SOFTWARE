@@ -1,0 +1,54 @@
+WL PT TOOL — SIDE-BY-SIDE WINDOWS INSTALLATION
+================================================
+
+This package installs WL PT TOOL without replacing or modifying the existing
+PlanTakeoff application.
+
+WHAT STAYS SEPARATE
+-------------------
+- Executable: WL PT TOOL.exe
+- Program folder: %LOCALAPPDATA%\Programs\WL PT TOOL
+- Desktop shortcut: WL PT TOOL
+- Start Menu shortcut: WL PT TOOL
+- Settings: %LOCALAPPDATA%\WL PT TOOL\settings.json
+- WebView/browser storage: %LOCALAPPDATA%\WL PT TOOL\WebView
+- Local server port: 8876
+
+The existing PlanTakeoff executable, shortcut, settings, local browser data,
+and installation folder are not removed or overwritten.
+
+INSTALL
+-------
+1. Extract the complete downloaded ZIP to a normal folder.
+2. Open the extracted folder.
+3. Double-click: Install WL PT TOOL.bat
+4. Windows SmartScreen may appear because the internal build is not digitally
+   signed. Select More info, confirm the publisher/source, then Run anyway.
+5. Launch WL PT TOOL from the new desktop or Start Menu shortcut.
+
+SAFE TESTING
+------------
+WL PT TOOL can point to the same Samuel Bids folder, but opening and editing a
+live EST job will update that job's job.json, takeoff files, Daily Logs, Change
+Orders, Client Updates, and backups.
+
+For a no-risk test:
+1. Copy one EST project into a separate test folder.
+2. Open the gear icon in WL PT TOOL.
+3. Set Bids root path to that test folder.
+4. Test takeoff, status changes, Daily Logs, Change Orders and backups there.
+
+UNINSTALL
+---------
+Use Uninstall WL PT TOOL.bat from the downloaded package or installed program
+folder. It removes only the WL PT TOOL program and shortcuts. It does not remove
+PlanTakeoff, EST job folders, backups, or WL PT TOOL settings unless you delete
+%LOCALAPPDATA%\WL PT TOOL manually.
+
+PORTABLE USE
+------------
+The App folder can also be run directly by opening:
+App\WL PT TOOL.exe
+
+Portable use still keeps settings and WebView data under the separate
+%LOCALAPPDATA%\WL PT TOOL profile.
