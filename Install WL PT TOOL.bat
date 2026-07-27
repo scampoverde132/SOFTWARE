@@ -29,6 +29,8 @@ echo Existing PlanTakeoff files will not be changed.
 echo Destination: %DEST%
 echo.
 
+REM Stop only a previous WL PT TOOL process so an upgrade can replace its files.
+taskkill /IM "WL PT TOOL.exe" /F >nul 2>&1
 if not exist "%DEST%" mkdir "%DEST%"
 robocopy "%SOURCE%" "%DEST%" /E /R:2 /W:1 /NFL /NDL /NJH /NJS /NP
 set "RC=%ERRORLEVEL%"
