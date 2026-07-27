@@ -33,6 +33,7 @@ REQUIRED_UI_FILES = (
     "js/daily-logs.js",
     "js/daily-logs-local-date.js",
     "js/settings.js",
+    "js/settings-model-defaults.js",
     "js/hardening.js",
     "js/client-updates.js",
     "js/pdf-loader-core.js",
@@ -44,6 +45,7 @@ REQUIRED_UI_FILES = (
 def app_dir() -> Path:
     """Directory that holds index.html, js/, css/, server.py (dev or frozen)."""
     if getattr(sys, "frozen", False):
+        # PyInstaller onedir: bundled data is in _MEIPASS (_internal)
         meipass = getattr(sys, "_MEIPASS", None)
         if meipass and (Path(meipass) / "index.html").exists():
             return Path(meipass)
@@ -81,12 +83,14 @@ def start_server(root: Path, port: int):
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
+    # Configure server module before import side-effects.
     import server as srv
     import job_server
     import daily_log_server
     import client_update_server
     import suite_server
 
+    # Additive patches: jobs, daily logs, client updates, then release hardening.
     job_server.install(srv)
     daily_log_server.install(srv)
     client_update_server.install(srv)
@@ -189,6 +193,7 @@ def main() -> int:
     if "--self-test" in sys.argv[1:]:
         return self_test(root)
 
+    # Allow override of bids root via env (set by launcher/installer).
     if not os.environ.get("PLANTAKEOFF_BIDS_ROOT"):
         default_bids = Path.home() / "OneDrive" / "Desktop" / "Samuel Bids"
         if default_bids.is_dir():
@@ -220,6 +225,7 @@ def main() -> int:
     try:
         import webview
     except ImportError:
+        # Fallback: open default browser and keep process alive.
         import webbrowser
 
         webbrowser.open(url)
