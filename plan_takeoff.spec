@@ -24,6 +24,7 @@ a = Analysis(
     datas=datas,
     hiddenimports=[
         "server",
+        "job_server",
         "webview",
         "webview.platforms.edgechromium",
         "clr",
