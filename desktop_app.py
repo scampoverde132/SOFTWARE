@@ -6,19 +6,44 @@ Runs the embedded local server + web UI in a dedicated window (pywebview).
 """
 from __future__ import annotations
 
+import json
 import os
 import socket
 import sys
 import threading
 import time
 import traceback
+import urllib.request
 from pathlib import Path
+
+
+REQUIRED_UI_FILES = (
+    "index.html",
+    "js/models.js",
+    "js/store.js",
+    "js/history.js",
+    "js/canvas-engine.js",
+    "js/estimates.js",
+    "js/job-model.js",
+    "js/command-center.js",
+    "js/productivity.js",
+    "js/finalization.js",
+    "js/change-order.js",
+    "js/change-order-disk.js",
+    "js/daily-logs.js",
+    "js/daily-logs-local-date.js",
+    "js/settings.js",
+    "js/hardening.js",
+    "js/client-updates.js",
+    "js/pdf-loader-core.js",
+    "js/pdf-loader.js",
+    "js/app.js",
+)
 
 
 def app_dir() -> Path:
     """Directory that holds index.html, js/, css/, server.py (dev or frozen)."""
     if getattr(sys, "frozen", False):
-        # PyInstaller onedir: bundled data is in _MEIPASS (_internal)
         meipass = getattr(sys, "_MEIPASS", None)
         if meipass and (Path(meipass) / "index.html").exists():
             return Path(meipass)
@@ -30,15 +55,21 @@ def app_dir() -> Path:
     return Path(__file__).resolve().parent
 
 
+def runtime_dir() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
 def free_port(preferred: int = 8765) -> int:
     """Pick a free localhost port. Prefer 8765; fall back to ephemeral."""
     candidates = [preferred] + list(range(preferred + 1, preferred + 20)) + [0]
     for port in candidates:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             try:
-                s.bind(("127.0.0.1", port if port else 0))
-                return s.getsockname()[1]
+                sock.bind(("127.0.0.1", port if port else 0))
+                return sock.getsockname()[1]
             except OSError:
                 continue
     raise OSError("No free localhost port for PlanTakeoff")
@@ -50,16 +81,16 @@ def start_server(root: Path, port: int):
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
-    # Configure server module before import side-effects
     import server as srv
     import job_server
     import daily_log_server
     import client_update_server
+    import suite_server
 
-    # Additive patches: jobs, daily logs, then client update generation.
     job_server.install(srv)
     daily_log_server.install(srv)
     client_update_server.install(srv)
+    suite_server.install(srv)
 
     srv.APP_DIR = root
     srv.PORT = port
@@ -74,39 +105,90 @@ def start_server(root: Path, port: int):
 
 
 def wait_ready(port: int, timeout: float = 12.0) -> bool:
-    import urllib.request
-    import urllib.error
-
     url = f"http://127.0.0.1:{port}/api/health"
     deadline = time.time() + timeout
     last_err = ""
     while time.time() < deadline:
         try:
-            with urllib.request.urlopen(url, timeout=1.5) as r:
-                if r.status == 200:
+            with urllib.request.urlopen(url, timeout=1.5) as response:
+                if response.status == 200:
                     return True
         except Exception as exc:
             last_err = f"{type(exc).__name__}: {exc}"
             time.sleep(0.2)
-    # Store for diagnostics
     wait_ready.last_error = last_err  # type: ignore[attr-defined]
     return False
 
 
-def show_error(msg: str):
+def show_error(message: str):
     try:
         import ctypes
 
-        ctypes.windll.user32.MessageBoxW(0, msg, "PlanTakeoff", 0x10)
+        ctypes.windll.user32.MessageBoxW(0, message, "PlanTakeoff", 0x10)
     except Exception:
-        print(msg, file=sys.stderr)
+        print(message, file=sys.stderr)
+
+
+def _json_get(port: int, path: str) -> dict:
+    with urllib.request.urlopen(f"http://127.0.0.1:{port}{path}", timeout=5) as response:
+        payload = json.loads(response.read().decode("utf-8"))
+        if response.status != 200:
+            raise RuntimeError(f"{path} returned HTTP {response.status}")
+        return payload
+
+
+def self_test(root: Path) -> int:
+    """Validate bundled files and the full local server stack without opening a window."""
+    log_path = runtime_dir() / "PlanTakeoff-self-test.log"
+    httpd = None
+    try:
+        missing = [relative for relative in REQUIRED_UI_FILES if not (root / relative).is_file()]
+        if missing:
+            raise RuntimeError("Missing bundled UI files: " + ", ".join(missing))
+
+        port = free_port(0)
+        httpd = start_server(root, port)
+        if not wait_ready(port, timeout=12):
+            detail = getattr(wait_ready, "last_error", "") or "no response"
+            raise RuntimeError(f"Local server did not become ready: {detail}")
+
+        config = _json_get(port, "/api/config")
+        settings = _json_get(port, "/api/suite/settings")
+        if not config.get("bids_root"):
+            raise RuntimeError("/api/config did not return bids_root")
+        if not settings.get("ok") or not isinstance(settings.get("settings"), dict):
+            raise RuntimeError("/api/suite/settings did not return valid settings")
+
+        result = {
+            "ok": True,
+            "checkedAt": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "appRoot": str(root),
+            "bidsRoot": config.get("bids_root"),
+            "requiredUiFiles": len(REQUIRED_UI_FILES),
+        }
+        log_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        return 0
+    except Exception:
+        log_path.write_text(
+            "PlanTakeoff standalone self-test failed\n\n" + traceback.format_exc(),
+            encoding="utf-8",
+        )
+        return 1
+    finally:
+        if httpd is not None:
+            try:
+                httpd.shutdown()
+            except Exception:
+                pass
 
 
 def main() -> int:
     root = app_dir()
     os.chdir(root)
 
-    # Allow override of bids root via env (set by launcher/installer)
+    if "--self-test" in sys.argv[1:]:
+        return self_test(root)
+
     if not os.environ.get("PLANTAKEOFF_BIDS_ROOT"):
         default_bids = Path.home() / "OneDrive" / "Desktop" / "Samuel Bids"
         if default_bids.is_dir():
@@ -138,7 +220,6 @@ def main() -> int:
     try:
         import webview
     except ImportError:
-        # Fallback: open default browser and keep process alive
         import webbrowser
 
         webbrowser.open(url)
