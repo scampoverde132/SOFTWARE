@@ -54,10 +54,12 @@ def start_server(root: Path, port: int):
     import server as srv
     import job_server
     import daily_log_server
+    import client_update_server
 
-    # Additive patches: disk-backed job workflow, then daily job-site logs.
+    # Additive patches: jobs, daily logs, then client update generation.
     job_server.install(srv)
     daily_log_server.install(srv)
+    client_update_server.install(srv)
 
     srv.APP_DIR = root
     srv.PORT = port
