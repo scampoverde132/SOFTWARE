@@ -13,6 +13,7 @@
   document.write('<script src="js/daily-logs.js"><\/script>');
   document.write('<script src="js/daily-logs-local-date.js"><\/script>');
   document.write('<script src="js/settings.js"><\/script>');
+  document.write('<script src="js/settings-model-defaults.js"><\/script>');
   document.write('<script src="js/hardening.js"><\/script>');
   document.write('<script src="js/client-updates.js"><\/script>');
   document.write('<script src="js/pdf-loader-core.js"><\/script>');
