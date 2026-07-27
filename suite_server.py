@@ -13,6 +13,7 @@ import json
 import os
 import re
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List
@@ -141,7 +142,7 @@ def configured_bids_root() -> Path:
 def save_settings(payload: Dict[str, Any]) -> Dict[str, Any]:
     current = read_settings()
     incoming = payload.get("settings") if isinstance(payload.get("settings"), dict) else payload
-    merged = {**current, **{key: incoming[key] for key in incoming if key in current}}
+    merged = {**current, **{k: incoming[k] for k in incoming if k in current}}
     if isinstance(incoming.get("rates"), dict):
         merged["rates"] = incoming["rates"]
     normalized = normalize_settings(merged)
@@ -227,6 +228,7 @@ def create_backup(server_module, payload: Dict[str, Any], *, reason: str | None 
     else:
         _copy_if_exists(folder / job_server.SNAPSHOT_FILE, target, copied)
 
+    # Preserve the finalized snapshot too when it is separate from the active working takeoff.
     if (folder / job_server.SNAPSHOT_FILE).is_file() and job_server.SNAPSHOT_FILE not in copied:
         _copy_if_exists(folder / job_server.SNAPSHOT_FILE, target, copied)
 
@@ -259,6 +261,22 @@ def update_job_and_backup(server_module, payload: Dict[str, Any]) -> Dict[str, A
             {"path": str(folder), "reason": f"status-{previous_status}-to-{next_status}"},
         )
     return {"job": job, "backup": backup}
+
+
+def finalize_job_and_backup(server_module, payload: Dict[str, Any]) -> Dict[str, Any]:
+    folder = job_server._validated_folder(server_module, payload)
+    before = job_server.read_or_create_job(folder)
+    previous_status = str(before.get("status") or "")
+    result = job_server.finalize_job(server_module, payload)
+    job = result.get("job") if isinstance(result, dict) else None
+    next_status = str((job or {}).get("status") or "Bid Sent")
+    backup = None
+    if previous_status != next_status:
+        backup = create_backup(
+            server_module,
+            {"path": str(folder), "reason": f"status-{previous_status}-to-{next_status}"},
+        )
+    return {**result, "backup": backup}
 
 
 def _api_error(operation: str, exc: Exception) -> Dict[str, Any]:
@@ -313,6 +331,7 @@ def install(server_module) -> None:
                 "/api/job/touch",
                 "/api/backup/create",
                 "/api/job/update",
+                "/api/job/finalize",
             ):
                 return original_post(self)
 
@@ -323,6 +342,8 @@ def install(server_module) -> None:
                 return self._send_json({"ok": True, **touch_job(server_module, body)})
             if api_path == "/api/backup/create":
                 return self._send_json({"ok": True, **create_backup(server_module, body)})
+            if api_path == "/api/job/finalize":
+                return self._send_json({"ok": True, **finalize_job_and_backup(server_module, body)})
             result = update_job_and_backup(server_module, body)
             return self._send_json({"ok": True, **result})
         except ValueError as exc:
