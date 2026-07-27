@@ -52,6 +52,10 @@ def start_server(root: Path, port: int):
 
     # Configure server module before import side-effects
     import server as srv
+    import job_server
+
+    # Additive patch: disk-backed job.json metadata + /api/job/update.
+    job_server.install(srv)
 
     srv.APP_DIR = root
     srv.PORT = port
