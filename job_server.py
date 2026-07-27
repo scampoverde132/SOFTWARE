@@ -184,6 +184,12 @@ def _normalize_change_order_item(item: Any, order_id: str, index: int) -> Dict[s
     result["generatedTakeoffIds"] = [
         str(value) for value in generated if value
     ] if isinstance(generated, list) else []
+    generated_objects = source.get("generatedTakeoffObjects")
+    result["generatedTakeoffObjects"] = [
+        copy.deepcopy(value)
+        for value in generated_objects
+        if isinstance(value, dict)
+    ] if isinstance(generated_objects, list) else []
 
     if item_type == "linked":
         result.update(
@@ -298,7 +304,7 @@ def _merge_change_orders(existing: List[Dict[str, Any]], incoming: List[Any]) ->
             if next_status not in CHANGE_ORDER_STATUSES:
                 next_status = "Pending"
             # Preserve the originally submitted scope/costs. Approval may only attach
-            # generated plan object IDs to the corresponding linked item.
+            # generated plan object IDs and geometry to the corresponding linked item.
             previous_items = copy.deepcopy(previous.get("items") or [])
             incoming_items = {
                 item.get("id"): item
@@ -312,6 +318,12 @@ def _merge_change_orders(existing: List[Dict[str, Any]], incoming: List[Any]) ->
                         str(value)
                         for value in incoming_item.get("generatedTakeoffIds")
                         if value
+                    ]
+                if incoming_item and isinstance(incoming_item.get("generatedTakeoffObjects"), list):
+                    item["generatedTakeoffObjects"] = [
+                        copy.deepcopy(value)
+                        for value in incoming_item.get("generatedTakeoffObjects")
+                        if isinstance(value, dict)
                     ]
             candidate = {
                 **previous,
