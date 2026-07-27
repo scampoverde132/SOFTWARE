@@ -200,14 +200,10 @@
     if (typeof S.saveState === 'function') {
       const original = S.saveState;
       S.saveState = async function (state, ...args) {
-        const previousProject = lastActiveProject;
         const result = await original.call(this, state, ...args);
         captureState(state);
         const current = findProject(state, state?.activeProjectId);
         if (current) queueTouch(current);
-        if (previousProject && projectPath(previousProject) && !findProject(state, previousProject.id)) {
-          createBackup(previousProject, 'removed-from-open-jobs', true);
-        }
         return result;
       };
     }
