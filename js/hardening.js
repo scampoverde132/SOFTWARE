@@ -149,7 +149,7 @@
     const path = projectPath(project);
     if (!path) return null;
     try {
-      const data = await postJson('/api/backup/create', { path, reason });
+      const data = await postJson('/api/backup/create', { path, reason, takeoffData: compactProject(project) });
       if (!silent) toast(`Backup created in ${data.backupFolder}`, { type: 'success', title: 'Job backup' });
       window.dispatchEvent(new CustomEvent('pt:job-backed-up', { detail: { path, reason, backup: data.backupFolder } }));
       return data;
@@ -216,7 +216,10 @@
     const project = lastActiveProject || findProject(appState, appState?.activeProjectId);
     const path = projectPath(project);
     if (!path) return;
-    const body = JSON.stringify({ path, reason: 'application-closed' });
+    const basic = { path, reason: 'application-closed' };
+    const withTakeoff = { ...basic, takeoffData: compactProject(project) };
+    const fullBody = JSON.stringify(withTakeoff);
+    const body = fullBody.length <= 55000 ? fullBody : JSON.stringify(basic);
     try {
       if (navigator.sendBeacon) {
         navigator.sendBeacon('/api/backup/create', new Blob([body], { type: 'application/json' }));
